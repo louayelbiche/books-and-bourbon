@@ -1,0 +1,126 @@
+{
+  "name": "Books and Bourbon",
+  "description": "Literary conversations platform featuring moderated author discussions",
+  "version": "1.0.0",
+  "brand": {
+    "colors": {
+      "primary": {
+        "black": "#0a0a0a",
+        "burgundy": "#722F37",
+        "burgundy-dark": "#5a252c",
+        "burgundy-light": "#8B3A44"
+      },
+      "accent": {
+        "gold": "#C9A227",
+        "cream": "#F5F0E8"
+      },
+      "neutral": {
+        "surface": "#111111",
+        "surface-elevated": "#1a1a1a",
+        "text-primary": "#F5F0E8",
+        "text-secondary": "#a0a0a0",
+        "text-muted": "#666666"
+      }
+    },
+    "typography": {
+      "display": "Playfair Display, Georgia, serif",
+      "body": "Inter, system-ui, sans-serif"
+    },
+    "aesthetic": "Dark luxury with burgundy accents - sophisticated, literary, warm"
+  },
+  "pages": [
+    {
+      "path": "/",
+      "name": "Home",
+      "sections": [
+        "Video Hero with Autoplay Background",
+        "Featured Episode with Video Player",
+        "Upcoming Events Grid",
+        "Featured Books Showcase",
+        "CTA Section (Suggest a Book)",
+        "Sponsors Bar"
+      ]
+    },
+    {
+      "path": "/events",
+      "name": "Events",
+      "sections": [
+        "Page Header",
+        "Filter Tabs (All/Recorded/Upcoming)",
+        "Events Grid with Video Modal",
+        "Video Player Modal"
+      ]
+    },
+    {
+      "path": "/books",
+      "name": "Books",
+      "sections": [
+        "Page Header",
+        "Genre Filter Pills",
+        "Books Grid",
+        "Book Detail Modal"
+      ]
+    },
+    {
+      "path": "/authors",
+      "name": "Authors",
+      "sections": [
+        "Page Header",
+        "Authors Grid",
+        "Author Detail Modal with Social Links"
+      ]
+    },
+    {
+      "path": "/about",
+      "name": "About",
+      "sections": [
+        "Hero Section",
+        "Mission Statement",
+        "Statistics Bar",
+        "Team Section",
+        "Values Grid",
+        "CTA Section"
+      ]
+    },
+    {
+      "path": "/contact",
+      "name": "Contact",
+      "sections": [
+        "Page Header",
+        "Contact Form (with Google Sheets integration)",
+        "Contact Information",
+        "Social Links",
+        "FAQ Link"
+      ]
+    }
+  ],
+  "features": {
+    "video": {
+      "hero": "Full-screen background video with dark/burgundy overlay",
+      "player": "Modal video player for recorded sessions",
+      "formats": ["mp4", "webm"]
+    },
+    "forms": {
+      "contact": "Multi-type suggestion form (book/author/partnership/general)",
+      "newsletter": "Email subscription in footer",
+      "backend": "Google Sheets API integration"
+    },
+    "interactivity": {
+      "modals": "Book details, Author profiles, Video player",
+      "filters": "Genre filtering, Event status filtering",
+      "animations": "Scroll reveal, Card hover, Page transitions"
+    }
+  },
+  "tech_stack": {
+    "framework": "Next.js 14 (App Router)",
+    "styling": "Tailwind CSS 3.4",
+    "icons": "@iconify/react",
+    "animations": "CSS + Intersection Observer",
+    "forms": "Google Sheets API"
+  },
+  "deployment": {
+    "local": "npm run dev",
+    "build": "npm run build",
+    "production": "Vercel / VPS with PM2"
+  }
+}

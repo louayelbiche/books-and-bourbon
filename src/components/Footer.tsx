@@ -1,0 +1,143 @@
+import Link from 'next/link'
+import { Icon } from '@iconify/react'
+
+const footerLinks = {
+  explore: [
+    { href: '/events', label: 'Events' },
+    { href: '/books', label: 'Books' },
+  ],
+  company: [
+    { href: '/about', label: 'About Us' },
+    { href: '/contact', label: 'Contact' },
+    { href: '/contact', label: 'Suggest a Book' },
+  ],
+  legal: [
+    { href: '#', label: 'Privacy Policy' },
+    { href: '#', label: 'Terms of Service' },
+  ],
+}
+
+const socialLinks = [
+  { href: '#', icon: 'mdi:youtube', label: 'YouTube' },
+  { href: '#', icon: 'mdi:instagram', label: 'Instagram' },
+  { href: '#', icon: 'mdi:linkedin', label: 'LinkedIn' },
+]
+
+export function Footer() {
+  return (
+    <footer className="bg-surface border-t border-text-muted/10">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+          {/* Brand Column */}
+          <div className="lg:col-span-2">
+            <Link href="/" className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-brand-burgundy flex items-center justify-center">
+                <Icon icon="mdi:book-open-page-variant" className="w-6 h-6 text-brand-cream" />
+              </div>
+              <span className="font-display text-xl font-semibold text-brand-cream">
+                Books & Bourbon
+              </span>
+            </Link>
+            <p className="text-text-secondary text-sm leading-relaxed max-w-sm mb-6">
+              Where great literature meets spirited conversation. Join us for
+              moderated discussions with acclaimed authors, hosted by passionate
+              literary enthusiasts.
+            </p>
+            <div className="flex gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="w-10 h-10 bg-surface-elevated flex items-center justify-center text-text-secondary hover:text-brand-cream hover:bg-brand-burgundy transition-all duration-300"
+                >
+                  <Icon icon={social.icon} className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Explore Links */}
+          <div>
+            <h4 className="font-display text-brand-cream font-semibold mb-4">
+              Explore
+            </h4>
+            <ul className="space-y-3">
+              {footerLinks.explore.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-text-secondary text-sm hover:text-brand-cream transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company Links */}
+          <div>
+            <h4 className="font-display text-brand-cream font-semibold mb-4">
+              Company
+            </h4>
+            <ul className="space-y-3">
+              {footerLinks.company.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-text-secondary text-sm hover:text-brand-cream transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h4 className="font-display text-brand-cream font-semibold mb-4">
+              Stay Updated
+            </h4>
+            <p className="text-text-secondary text-sm mb-4">
+              Get notified about new episodes and author announcements.
+            </p>
+            <form className="flex flex-col gap-3">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="form-input text-sm"
+              />
+              <button
+                type="submit"
+                className="bg-brand-burgundy hover:bg-brand-burgundy-light text-brand-cream px-4 py-2.5 text-sm font-medium transition-colors"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="mt-16 pt-8 border-t border-text-muted/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-text-muted text-sm">
+            &copy; {new Date().getFullYear()} Books and Bourbon. All rights reserved.
+          </p>
+          <ul className="flex gap-6">
+            {footerLinks.legal.map((link) => (
+              <li key={link.label}>
+                <Link
+                  href={link.href}
+                  className="text-text-muted text-sm hover:text-text-secondary transition-colors"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </footer>
+  )
+}

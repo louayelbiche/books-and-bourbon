@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import brand kit CSS variables */
+@import "@runwell/capitalv-brand-kit/css/capitalv.dark.css";
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+/* Legacy CSS variables for backwards compatibility */
+:root {
+  --brand-black: #0a0a0a;
+  --brand-burgundy: #3B0F11;
+  --brand-burgundy-dark: #2a0b0c;
+  --brand-burgundy-light: #5c1a1e;
+  --brand-gold: #a18320;
+  --brand-cream: #f5e6d4;
+  --brand-tan: #c6c0ab;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--brand-black);
+  color: var(--brand-cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--brand-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--brand-burgundy);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-burgundy-dark);
+}
+
+/* Selection styling */
+::selection {
+  background: var(--brand-burgundy);
+  color: var(--brand-cream);
+}
+
+/* Animations */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal.active {
+  animation: reveal 0.8s ease-out forwards;
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+
+/* Video overlay gradient */
+.video-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.4) 0%,
+    rgba(10, 10, 10, 0.6) 50%,
+    rgba(10, 10, 10, 0.9) 100%
+  );
+}
+
+/* Burgundy glow effect */
+.burgundy-glow {
+  box-shadow: 0 0 60px rgba(59, 15, 17, 0.3);
+}
+
+/* Button hover effect */
+.btn-primary {
+  @apply relative overflow-hidden bg-brand-burgundy text-brand-cream px-8 py-4 font-medium tracking-wide transition-all duration-300;
+}
+
+.btn-primary::before {
+  content: '';
+  @apply absolute inset-0 bg-brand-burgundy-light transform -translate-x-full transition-transform duration-300;
+}
+
+.btn-primary:hover::before {
+  @apply translate-x-0;
+}
+
+.btn-primary span {
+  @apply relative z-10;
+}
+
+/* Card hover effect */
+.card-hover {
+  @apply transition-all duration-500;
+}
+
+.card-hover:hover {
+  @apply -translate-y-2;
+  box-shadow: 0 20px 40px rgba(59, 15, 17, 0.2);
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, var(--brand-cream) 0%, var(--brand-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Form input styling */
+.form-input {
+  @apply w-full bg-surface border border-text-muted/30 px-4 py-3 text-brand-cream placeholder:text-text-muted focus:border-brand-burgundy focus:outline-none transition-colors duration-300;
+}
+
+.form-input:focus {
+  box-shadow: 0 0 0 2px rgba(59, 15, 17, 0.2);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

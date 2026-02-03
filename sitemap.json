@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "name": "Books and Bourbon",
+    "version": "1.0.0",
+    "status": "development"
+  },
+  "pages": [
+    {
+      "id": "",
+      "path": "/.",
+      "title": "The Art of Storytelling",
+      "description": "",
+      "sections": [],
+      "meta": {}
+    },
+    {
+      "id": "contact",
+      "path": "/contact",
+      "title": "books-and-bourbon",
+      "description": "",
+      "sections": [],
+      "meta": {}
+    },
+    {
+      "id": "authors",
+      "path": "/authors",
+      "title": "books-and-bourbon",
+      "description": "",
+      "sections": [],
+      "meta": {}
+    },
+    {
+      "id": "about",
+      "path": "/about",
+      "title": "books-and-bourbon",
+      "description": "",
+      "sections": [],
+      "meta": {}
+    },
+    {
+      "id": "books",
+      "path": "/books",
+      "title": "Whispers in the Dark",
+      "description": "A gripping psychological thriller that explores the depths of human nature and the secrets we keep hidden.",
+      "sections": [],
+      "meta": {}
+    },
+    {
+      "id": "events",
+      "path": "/events",
+      "title": "The Art of Storytelling",
+      "description": "A deep dive into narrative techniques and the craft of building suspense.",
+      "sections": [],
+      "meta": {}
+    }
+  ],
+  "navigation": {
+    "main": []
+  },
+  "_generated": {
+    "tool": "generate-sitemap.py",
+    "timestamp": "2026-02-03T03:24:23.338531Z",
+    "source_type": "nextjs"
+  }
+}
