@@ -18,9 +18,8 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { href: '#', icon: 'mdi:youtube', label: 'YouTube' },
-  { href: '#', icon: 'mdi:instagram', label: 'Instagram' },
-  { href: '#', icon: 'mdi:linkedin', label: 'LinkedIn' },
+  { href: 'https://www.instagram.com/capvstrategies/', icon: 'mdi:instagram', label: 'Instagram' },
+  { href: 'https://www.linkedin.com/company/capitalvstrategies', icon: 'mdi:linkedin', label: 'LinkedIn' },
 ]
 
 export function Footer() {
@@ -38,7 +37,7 @@ export function Footer() {
                 Books & Bourbon
               </span>
             </Link>
-            <p className="text-text-secondary text-sm leading-relaxed max-w-sm mb-6">
+            <p className="text-brand-tan text-sm leading-relaxed max-w-sm mb-6">
               Where great literature meets spirited conversation. Join us for
               moderated discussions with acclaimed authors, hosted by passionate
               literary enthusiasts.
@@ -48,6 +47,8 @@ export function Footer() {
                 <a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
                   className="w-10 h-10 bg-surface-elevated flex items-center justify-center text-text-secondary hover:text-brand-cream hover:bg-brand-burgundy transition-all duration-300"
                 >
@@ -100,7 +101,7 @@ export function Footer() {
             <h4 className="font-display text-brand-cream font-semibold mb-4">
               Stay Updated
             </h4>
-            <p className="text-text-secondary text-sm mb-4">
+            <p className="text-brand-tan text-sm mb-4">
               Get notified about new episodes and author announcements.
             </p>
             <form className="flex flex-col gap-3">

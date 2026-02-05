@@ -11,16 +11,22 @@ const stats = [
 
 const team = [
   {
-    name: 'Alexandra Pierce',
-    role: 'Founder & Host',
-    photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400',
-    bio: 'Former literary editor turned podcast host, Alexandra brings decades of publishing experience to every conversation.',
+    name: 'Jessica Schaefer',
+    role: 'Host',
+    photo: 'https://placehold.co/400x400/3b0f11/f5e6d4?text=JS',
+    bio: 'Jessica brings her passion for literature and meaningful conversations to every episode of Books and Bourbon.',
   },
   {
-    name: 'Marcus Webb',
-    role: 'Co-Host & Producer',
-    photo: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400',
-    bio: 'An award-winning documentary filmmaker, Marcus ensures every episode captures the essence of great storytelling.',
+    name: 'Andy Duenas',
+    role: 'Host',
+    photo: '/images/team/andy-duenas.jpg',
+    bio: 'Andy combines his love of storytelling with deep industry expertise to create engaging discussions.',
+  },
+  {
+    name: 'Patrick Kearns',
+    role: 'Host',
+    photo: '/images/team/patrick-kearns.jpg',
+    bio: 'Patrick contributes his unique perspective and thoughtful analysis to every literary conversation.',
   },
 ]
 
@@ -91,7 +97,7 @@ export default function AboutPage() {
                 <p className="font-display text-4xl md:text-5xl text-brand-burgundy mb-2">
                   {stat.value}
                 </p>
-                <p className="text-text-secondary text-sm">
+                <p className="text-brand-tan text-sm">
                   {stat.label}
                 </p>
               </div>
@@ -112,7 +118,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
             {team.map((member) => (
               <div key={member.name} className="text-center">
                 <div className="w-48 h-48 mx-auto relative mb-6 burgundy-glow rounded-full overflow-hidden">
@@ -129,7 +135,7 @@ export default function AboutPage() {
                 <p className="text-brand-burgundy font-medium mb-4">
                   {member.role}
                 </p>
-                <p className="text-text-secondary text-sm max-w-sm mx-auto">
+                <p className="text-brand-tan text-sm max-w-sm mx-auto">
                   {member.bio}
                 </p>
               </div>

@@ -22,20 +22,6 @@ const upcomingEvents = [
     date: 'Feb 22, 2026',
     image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400',
   },
-  {
-    id: 2,
-    title: 'Poetry in Motion',
-    author: 'Michael Torres',
-    date: 'Mar 1, 2026',
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400',
-  },
-  {
-    id: 3,
-    title: 'Sci-Fi Frontiers',
-    author: 'Elena Volkov',
-    date: 'Mar 8, 2026',
-    image: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400',
-  },
 ]
 
 const featuredBooks = [
@@ -45,27 +31,6 @@ const featuredBooks = [
     author: 'James Morrison',
     cover: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300',
     genre: 'Thriller',
-  },
-  {
-    id: 2,
-    title: 'The Last Garden',
-    author: 'Sarah Chen',
-    cover: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=300',
-    genre: 'Literary Fiction',
-  },
-  {
-    id: 3,
-    title: 'Stardust Memory',
-    author: 'Elena Volkov',
-    cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300',
-    genre: 'Science Fiction',
-  },
-  {
-    id: 4,
-    title: 'River of Time',
-    author: 'Michael Torres',
-    cover: 'https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=300',
-    genre: 'Poetry',
   },
 ]
 
@@ -130,7 +95,8 @@ export default function HomePage() {
             Literary Conversations
           </p>
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-semibold text-brand-cream mb-6 animate-slide-up">
-            Books & <span className="text-gradient">Bourbon</span>
+            Books and <span className="text-gradient">Bourbon</span>
+            <span className="block text-2xl md:text-3xl lg:text-4xl mt-4 font-normal">(hosted by Cap V)</span>
           </h1>
           <p className="text-xl md:text-2xl text-text-secondary max-w-2xl mx-auto mb-10 animate-slide-up" style={{ animationDelay: '0.2s' }}>
             Where great literature meets spirited conversation.
@@ -139,15 +105,15 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
             <Link href="/events" className="btn-primary">
               <span className="flex items-center gap-2">
-                <Icon icon="mdi:play-circle" className="w-5 h-5" />
-                Watch Latest Episode
+                <Icon icon="mdi:calendar" className="w-5 h-5" />
+                View Events
               </span>
             </Link>
             <Link
               href="/contact"
               className="px-8 py-4 border border-brand-cream/30 text-brand-cream font-medium tracking-wide hover:bg-brand-cream/10 transition-all duration-300"
             >
-              Suggest a Book
+              Contact Us
             </Link>
           </div>
         </div>
@@ -193,10 +159,10 @@ export default function HomePage() {
               <h2 className="font-display text-3xl md:text-4xl text-brand-cream mb-4">
                 {featuredEvent.title}
               </h2>
-              <p className="text-text-secondary mb-2">
+              <p className="text-brand-tan mb-2">
                 with <span className="text-brand-cream">{featuredEvent.author}</span>
               </p>
-              <p className="text-text-muted text-sm mb-6">
+              <p className="text-brand-tan/70 text-sm mb-6">
                 Discussing &ldquo;{featuredEvent.book}&rdquo;
               </p>
               <p className="text-text-secondary flex items-center gap-2 mb-8">
@@ -244,14 +210,14 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 to-transparent" />
                 </div>
                 <div className="p-6">
-                  <p className="text-text-muted text-sm flex items-center gap-2 mb-2">
+                  <p className="text-brand-tan/70 text-sm flex items-center gap-2 mb-2">
                     <Icon icon="mdi:calendar" className="w-4 h-4" />
                     {event.date}
                   </p>
                   <h3 className="font-display text-xl text-brand-cream mb-2">
                     {event.title}
                   </h3>
-                  <p className="text-text-secondary text-sm">
+                  <p className="text-brand-tan text-sm">
                     with {event.author}
                   </p>
                 </div>
@@ -313,7 +279,7 @@ export default function HomePage() {
                 <h3 className="font-display text-lg text-brand-cream mt-1">
                   {book.title}
                 </h3>
-                <p className="text-text-secondary text-sm">
+                <p className="text-brand-tan text-sm">
                   {book.author}
                 </p>
               </div>
@@ -329,30 +295,6 @@ export default function HomePage() {
               <Icon icon="mdi:arrow-right" className="w-5 h-5" />
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-burgundy opacity-90" />
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1920')] bg-cover bg-center mix-blend-overlay opacity-20" />
-
-        <div ref={addToRefs} className="reveal relative z-10 max-w-3xl mx-auto px-6 text-center">
-          <Icon icon="mdi:lightbulb-on" className="w-12 h-12 text-brand-gold mx-auto mb-6" />
-          <h2 className="font-display text-4xl md:text-5xl text-brand-cream mb-6">
-            Have a Book Suggestion?
-          </h2>
-          <p className="text-brand-cream/80 text-lg mb-10 max-w-xl mx-auto">
-            We&apos;re always looking for great books and fascinating authors to feature.
-            Share your recommendations with us.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 bg-brand-black text-brand-cream px-8 py-4 font-medium tracking-wide hover:bg-brand-black/80 transition-colors"
-          >
-            Submit a Suggestion
-            <Icon icon="mdi:arrow-right" className="w-5 h-5" />
-          </Link>
         </div>
       </section>
 

@@ -98,18 +98,18 @@ export default function ContactPage() {
               </h2>
 
               {submitStatus === 'success' && (
-                <div className="bg-green-900/20 border border-green-500/30 p-4 mb-8 flex items-center gap-3">
-                  <Icon icon="mdi:check-circle" className="w-6 h-6 text-green-500" />
-                  <p className="text-green-400">
+                <div className="bg-brand-gold/10 border border-brand-gold/30 p-4 mb-8 flex items-center gap-3">
+                  <Icon icon="mdi:check-circle" className="w-6 h-6 text-brand-gold" />
+                  <p className="text-brand-tan">
                     Thank you! Your message has been sent successfully.
                   </p>
                 </div>
               )}
 
               {submitStatus === 'error' && (
-                <div className="bg-red-900/20 border border-red-500/30 p-4 mb-8 flex items-center gap-3">
-                  <Icon icon="mdi:alert-circle" className="w-6 h-6 text-red-500" />
-                  <p className="text-red-400">
+                <div className="bg-brand-burgundy/20 border border-brand-burgundy/50 p-4 mb-8 flex items-center gap-3">
+                  <Icon icon="mdi:alert-circle" className="w-6 h-6 text-brand-burgundy-light" />
+                  <p className="text-brand-cream/80">
                     Something went wrong. Please try again later.
                   </p>
                 </div>
@@ -253,8 +253,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-medium text-brand-cream mb-1">Email</h3>
-                    <p className="text-text-secondary">hello@booksandbourbon.com</p>
-                    <p className="text-text-muted text-sm mt-1">We respond within 48 hours</p>
+                    <p className="text-brand-tan">info@capvstrategies.com</p>
+                    <p className="text-brand-tan/70 text-sm mt-1">We respond within 48 hours</p>
                   </div>
                 </div>
 
@@ -263,23 +263,10 @@ export default function ContactPage() {
                     <Icon icon="mdi:map-marker" className="w-6 h-6 text-brand-cream" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-brand-cream mb-1">Studio Location</h3>
-                    <p className="text-text-secondary">
-                      123 Literary Lane<br />
-                      New York, NY 10001
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-brand-burgundy flex items-center justify-center flex-shrink-0">
-                    <Icon icon="mdi:clock" className="w-6 h-6 text-brand-cream" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-brand-cream mb-1">Recording Schedule</h3>
-                    <p className="text-text-secondary">
-                      New episodes every Saturday<br />
-                      Live recordings: First Friday of each month
+                    <h3 className="font-medium text-brand-cream mb-1">Location</h3>
+                    <p className="text-brand-tan">
+                      40 Thompson Street, Floor 6<br />
+                      New York, NY 10013
                     </p>
                   </div>
                 </div>
@@ -290,13 +277,14 @@ export default function ContactPage() {
                 <h3 className="font-medium text-brand-cream mb-4">Follow Us</h3>
                 <div className="flex gap-4">
                   {[
-                    { icon: 'mdi:youtube', label: 'YouTube' },
-                    { icon: 'mdi:instagram', label: 'Instagram' },
-                    { icon: 'mdi:linkedin', label: 'LinkedIn' },
+                    { icon: 'mdi:instagram', label: 'Instagram', href: 'https://www.instagram.com/capvstrategies/' },
+                    { icon: 'mdi:linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/capitalvstrategies' },
                   ].map((social) => (
                     <a
                       key={social.label}
-                      href="#"
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       aria-label={social.label}
                       className="w-10 h-10 bg-surface-elevated flex items-center justify-center text-text-secondary hover:text-brand-cream hover:bg-brand-burgundy transition-all"
                     >
@@ -311,7 +299,7 @@ export default function ContactPage() {
                 <h3 className="font-display text-xl text-brand-cream mb-2">
                   Frequently Asked Questions
                 </h3>
-                <p className="text-text-secondary text-sm mb-4">
+                <p className="text-brand-tan text-sm mb-4">
                   Have questions about how Books and Bourbon works?
                 </p>
                 <a

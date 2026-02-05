@@ -60,15 +60,6 @@ export function Navigation() {
           ))}
         </ul>
 
-        {/* CTA Button */}
-        <Link
-          href="/contact"
-          className="hidden md:flex items-center gap-2 bg-brand-burgundy hover:bg-brand-burgundy-light text-brand-cream px-5 py-2.5 text-sm font-medium transition-all duration-300"
-        >
-          Suggest a Book
-          <Icon icon="mdi:arrow-right" className="w-4 h-4" />
-        </Link>
-
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -102,16 +93,6 @@ export function Navigation() {
               </Link>
             </li>
           ))}
-          <li className="mt-4">
-            <Link
-              href="/contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 bg-brand-burgundy text-brand-cream px-8 py-3 text-lg font-medium"
-            >
-              Suggest a Book
-              <Icon icon="mdi:arrow-right" className="w-5 h-5" />
-            </Link>
-          </li>
         </ul>
       </div>
     </header>

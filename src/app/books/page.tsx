@@ -17,76 +17,6 @@ const books = [
     featured: true,
     purchaseUrl: '#',
   },
-  {
-    id: 2,
-    title: 'The Last Garden',
-    author: 'Sarah Chen',
-    cover: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400',
-    genre: 'Literary Fiction',
-    description: 'A beautifully crafted novel about family, loss, and the gardens we cultivate in our lives.',
-    featured: true,
-    purchaseUrl: '#',
-  },
-  {
-    id: 3,
-    title: 'Stardust Memory',
-    author: 'Elena Volkov',
-    cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400',
-    genre: 'Science Fiction',
-    description: 'An epic space opera that spans galaxies and generations, exploring what it means to be human.',
-    featured: true,
-    purchaseUrl: '#',
-  },
-  {
-    id: 4,
-    title: 'River of Time',
-    author: 'Michael Torres',
-    cover: 'https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=400',
-    genre: 'Poetry',
-    description: 'A collection of contemporary poetry that captures the rhythms of modern life with timeless elegance.',
-    featured: false,
-    purchaseUrl: '#',
-  },
-  {
-    id: 5,
-    title: 'Echoes of Empire',
-    author: 'Robert Williams',
-    cover: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400',
-    genre: 'Historical Fiction',
-    description: 'A sweeping historical novel set in the twilight years of the British Empire.',
-    featured: false,
-    purchaseUrl: '#',
-  },
-  {
-    id: 6,
-    title: 'Midnight Sonata',
-    author: 'Clara Bennett',
-    cover: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400',
-    genre: 'Romance',
-    description: 'A passionate love story set against the backdrop of the classical music world.',
-    featured: false,
-    purchaseUrl: '#',
-  },
-  {
-    id: 7,
-    title: 'The Cipher',
-    author: 'David Park',
-    cover: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400',
-    genre: 'Mystery',
-    description: 'A code-breaking mystery that will keep you guessing until the very last page.',
-    featured: false,
-    purchaseUrl: '#',
-  },
-  {
-    id: 8,
-    title: 'Wild Hearts',
-    author: 'Anna Rodriguez',
-    cover: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400',
-    genre: 'Adventure',
-    description: 'An exhilarating adventure across the American wilderness in search of redemption.',
-    featured: false,
-    purchaseUrl: '#',
-  },
 ]
 
 export default function BooksPage() {
@@ -141,7 +71,7 @@ export default function BooksPage() {
                 <h3 className="font-display text-lg text-brand-cream mt-1 group-hover:text-brand-gold transition-colors">
                   {book.title}
                 </h3>
-                <p className="text-text-secondary text-sm">
+                <p className="text-brand-tan text-sm">
                   {book.author}
                 </p>
               </div>
@@ -189,11 +119,11 @@ export default function BooksPage() {
                 <h2 className="font-display text-3xl md:text-4xl text-brand-cream mt-2 mb-2">
                   {selectedBook.title}
                 </h2>
-                <p className="text-text-secondary text-lg mb-6">
+                <p className="text-brand-tan text-lg mb-6">
                   by {selectedBook.author}
                 </p>
 
-                <p className="text-text-secondary leading-relaxed mb-8">
+                <p className="text-brand-tan/80 leading-relaxed mb-8">
                   {selectedBook.description}
                 </p>
 

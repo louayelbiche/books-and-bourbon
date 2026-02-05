@@ -18,50 +18,6 @@ const events = [
     description: 'A deep dive into narrative techniques and the craft of building suspense.',
     status: 'recorded',
   },
-  {
-    id: 2,
-    title: 'Poetry in the Modern Age',
-    author: 'Michael Torres',
-    book: 'River of Time',
-    date: 'February 8, 2026',
-    duration: '45:17',
-    thumbnail: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    description: 'Exploring contemporary poetry and its relevance in the digital age.',
-    status: 'recorded',
-  },
-  {
-    id: 3,
-    title: 'Building Worlds',
-    author: 'Elena Volkov',
-    book: 'Stardust Memory',
-    date: 'January 25, 2026',
-    duration: '1:02:45',
-    thumbnail: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=800',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    description: 'Science fiction world-building and the intersection of science and imagination.',
-    status: 'recorded',
-  },
-  {
-    id: 4,
-    title: 'Mystery Unraveled',
-    author: 'Sarah Chen',
-    book: 'The Last Garden',
-    date: 'February 22, 2026',
-    thumbnail: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800',
-    description: 'Join us for a conversation about literary mysteries and plot construction.',
-    status: 'upcoming',
-  },
-  {
-    id: 5,
-    title: 'Historical Fiction Deep Dive',
-    author: 'Robert Williams',
-    book: 'Echoes of Empire',
-    date: 'March 1, 2026',
-    thumbnail: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800',
-    description: 'Balancing historical accuracy with compelling fiction.',
-    status: 'upcoming',
-  },
 ]
 
 type FilterStatus = 'all' | 'recorded' | 'upcoming'
@@ -175,14 +131,14 @@ export default function EventsPage() {
 
                 {/* Content */}
                 <div className="p-6">
-                  <div className="flex items-center gap-4 text-text-muted text-sm mb-3">
+                  <div className="flex items-center gap-4 text-brand-tan/70 text-sm mb-3">
                     <span className="flex items-center gap-1">
                       <Icon icon="mdi:calendar" className="w-4 h-4" />
                       {event.date}
                     </span>
                     {event.status === 'recorded' && (
                       <span className="flex items-center gap-1">
-                        <Icon icon="mdi:check-circle" className="w-4 h-4 text-green-500" />
+                        <Icon icon="mdi:check-circle" className="w-4 h-4 text-brand-gold" />
                         Recorded
                       </span>
                     )}
@@ -192,12 +148,12 @@ export default function EventsPage() {
                     {event.title}
                   </h2>
 
-                  <p className="text-text-secondary text-sm mb-4">
+                  <p className="text-brand-tan text-sm mb-4">
                     with <span className="text-brand-cream">{event.author}</span>
                     {' '}discussing &ldquo;{event.book}&rdquo;
                   </p>
 
-                  <p className="text-text-muted text-sm line-clamp-2">
+                  <p className="text-brand-tan/70 text-sm line-clamp-2">
                     {event.description}
                   </p>
                 </div>
