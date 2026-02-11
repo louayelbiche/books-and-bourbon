@@ -2,82 +2,146 @@
 
 ## Current State (Feb 2026)
 
-- **Staging**: `books-staging.runwellsystems.com` — B&B app deployed, BUT subscribe form doesn't work (BIB CMS missing subscribers route)
-- **Production**: `books.runwellsystems.com` — running old version, needs full redeploy
+- **Staging**: `books-staging.runwellsystems.com` (port 9202) — fully deployed, subscribe works
+- **Production**: `books.runwellsystems.com` (port 9201) — running old version, needs redeploy
+- **BIB Dashboard**: CMS subscribers route deployed and verified on VPS (port 3260)
 
-## What Works Without CMS
+## Build Requirements
 
-The B&B site uses `fallbackEvents` from `src/app/events/fallback.ts` when the CMS is unavailable. All sections render (hero, featured, upcoming, past reads, suggest a book, footer). Only dynamic features (subscribe, CMS-managed events) are unavailable.
+### Prerequisites
 
-## Prerequisites for Full Production Deploy
+- **Node.js** >= 20
+- **npm** (used on VPS, not pnpm — this is a standalone app, not a monorepo)
+- **Brand kit**: `@runwell/capitalv-brand-kit` must be available as a local `file:` dependency
 
-### 1. BIB Dashboard — Deploy CMS Subscribers Route (BLOCKER)
+### Dependencies
 
-The VPS BIB dashboard (`/opt/repos/runwell-bib/apps/web`) is a **monorepo rsync deployment** (not git). It needs a full rebuild to add the subscribers CMS route.
+| Package | Purpose |
+|---------|---------|
+| `next` ^14.2 | Framework |
+| `react` / `react-dom` ^18.2 | UI |
+| `@iconify/react` ^5.0 | Icons (mdi set) |
+| `@runwell/capitalv-brand-kit` | Brand tokens (colors, fonts, logos) |
+| `tailwindcss` ^3.4 | Styling |
+| `typescript` ^5.3 | Type safety |
 
-**What's missing on VPS:**
-- `apps/web/app/api/cms/v1/subscribers/route.ts` — CMS POST endpoint
-- `apps/web/app/api/admin/subscribers/route.ts` — Admin GET (list)
-- `apps/web/app/api/admin/subscribers/[id]/route.ts` — Admin DELETE
-- `apps/web/lib/sanitize.ts` — input sanitization
-- `apps/web/components/dashboard/layout/Sidebar.tsx` — "Subscribers" nav item
-- `packages/core/prisma/schema.prisma` — Subscriber model (ALREADY PUSHED to DB)
-- `lucide-react` dependency — needed for Sidebar Mail icon
+### Environment Variables
 
-**Why rebuild fails:**
-- VPS uses rsync, not git (no `pnpm-workspace.yaml`)
-- `npm install` fails on `workspace:*` protocol
-- Need pnpm on VPS or rewrite workspace deps to `file:` paths
-- `@runwell/bib-cms` export issue (separate from subscribers)
-
-**Fix approach:**
-1. Install pnpm on VPS: `npm i -g pnpm`
-2. Full rsync of monorepo `packages/` + `apps/web/`
-3. Rewrite `workspace:*` → `file:` in all package.jsons
-4. `pnpm install` + build
-5. Or: use turbo-prune Docker build
-
-### 2. B&B Environment Variables
-
-Create `.env.local` on VPS (both staging and production):
+Create `.env.local` (excluded from rsync, must be created manually on each target):
 
 ```
-CMS_API_URL=http://localhost:3260    # BIB dashboard production port
+CMS_API_URL=http://localhost:3260    # BIB dashboard on same VPS
 CMS_API_KEY=ws_live_fEB_W82WeyFPKFkZGEKpppUOB6Te7erSAux26euiJLE
 ```
 
-**Note**: When B&B moves to its own domain/customer infra, `CMS_API_URL` must point to the BIB dashboard's **public URL** (not localhost), e.g. `https://dashboard.runwellsystems.com`.
+**Both vars are required for:**
+- Fetching events/books/FAQs from CMS (`src/lib/cms.ts`)
+- Newsletter subscribe proxy (`src/app/api/subscribe/route.ts`)
 
-### 3. API Key Scopes
+**Without these vars:** The site renders fully using fallback data from `src/app/events/fallback.ts`. Only dynamic features (subscribe form, CMS-managed events) are unavailable.
 
-The CapitalV API key already has `['read', 'write']` scopes (updated in this session). Verify:
+### Brand Kit Dependency
 
+Local development:
+```json
+"@runwell/capitalv-brand-kit": "file:../capitalv-brand-kit"
+```
+
+VPS deployment — rewrite to absolute path:
+```json
+"@runwell/capitalv-brand-kit": "file:/opt/capitalv-brand-kit"
+```
+
+The brand kit must be synced to `/opt/capitalv-brand-kit/` on VPS before building B&B.
+
+### CMS API Key Scopes
+
+The CapitalV API key requires `['read', 'write']` scopes:
+- `read` — fetch events, books, FAQs
+- `write` — subscribe endpoint (POST)
+
+Verify:
 ```sql
 SELECT "keyPrefix", scopes FROM api_keys
 JOIN tenants ON api_keys."tenantId" = tenants.id
 WHERE tenants.name = 'CapitalV';
 ```
 
-### 4. B&B App Deploy
+## CMS Routes Required on BIB Dashboard
+
+The B&B app depends on these BIB CMS routes (all deployed Feb 2026):
+
+| Route | Method | Auth | Purpose |
+|-------|--------|------|---------|
+| `/api/cms/v1/events` | GET | API key | Fetch events for homepage |
+| `/api/cms/v1/books` | GET | API key | Fetch book catalog |
+| `/api/cms/v1/faqs` | GET | API key | Fetch FAQ content |
+| `/api/cms/v1/subscribers` | POST | API key (write) | Newsletter subscribe |
+| `/api/admin/subscribers` | GET | Session auth | Dashboard subscriber list |
+| `/api/admin/subscribers/[id]` | DELETE | Session auth | Dashboard subscriber delete |
+
+**BIB Dashboard VPS location:** `/opt/repos/runwell-bib/apps/web/` (port 3260)
+
+**Database:** Prisma schema includes `Subscriber` model with `@@unique([tenantId, email])`. Both staging and production databases have the table and enum created.
+
+## Deployment Steps
+
+### Staging (port 9202)
 
 ```bash
-# Rsync source
+# 1. Rsync source
+rsync -avz --delete \
+  --exclude node_modules --exclude .next --exclude .git --exclude .env.local \
+  /Users/balencia/Documents/Code/books-and-bourbon/ \
+  root@72.62.121.234:/opt/books-and-bourbon-staging/
+
+# 2. Rewrite brand kit path for VPS
+ssh root@72.62.121.234 "cd /opt/books-and-bourbon-staging && \
+  sed -i 's|file:../capitalv-brand-kit|file:/opt/capitalv-brand-kit|' package.json"
+
+# 3. Install, build, restart
+ssh root@72.62.121.234 "cd /opt/books-and-bourbon-staging && \
+  npm install && npm run build && pm2 restart books-and-bourbon-staging"
+```
+
+### Production (port 9201)
+
+```bash
+# 1. Rsync source
 rsync -avz --delete \
   --exclude node_modules --exclude .next --exclude .git --exclude .env.local \
   /Users/balencia/Documents/Code/books-and-bourbon/ \
   root@72.62.121.234:/opt/books-and-bourbon/
 
-# Install, build, restart
-ssh root@72.62.121.234 "cd /opt/books-and-bourbon && npm install && npm run build && pm2 restart books-and-bourbon"
+# 2. Rewrite brand kit path for VPS
+ssh root@72.62.121.234 "cd /opt/books-and-bourbon && \
+  sed -i 's|file:../capitalv-brand-kit|file:/opt/capitalv-brand-kit|' package.json"
+
+# 3. Install, build, restart
+ssh root@72.62.121.234 "cd /opt/books-and-bourbon && \
+  npm install && npm run build && pm2 restart books-and-bourbon"
 ```
 
-### 5. Brand Kit Dependency
+### Verify After Deploy
 
-The B&B app depends on `@runwell/capitalv-brand-kit` at `/opt/capitalv-brand-kit/` on VPS. The `package.json` path must be rewritten:
+```bash
+# Health check
+curl -s https://books-staging.runwellsystems.com/api/health/ | jq .
 
-```json
-"@runwell/capitalv-brand-kit": "file:/opt/capitalv-brand-kit"
+# Subscribe test
+curl -s -X POST https://books-staging.runwellsystems.com/api/subscribe/ \
+  -H "Content-Type: application/json" \
+  -d '{"email": "test@example.com"}' | jq .
 ```
+
+## Fallback Data
+
+When CMS is unavailable (no env vars, network issue, CMS down):
+
+- `src/app/events/fallback.ts` — 6 events (2 upcoming + 4 past/recorded)
+- `src/app/page.tsx` — uses `fallbackEvents` when `fetchEvents()` returns empty
+- All sections render: hero, featured event, upcoming, past reads, suggest a book, footer
+- Subscribe form shows "Newsletter service is not configured" (503)
 
 ## Customer Domain Transfer Checklist
 
@@ -89,13 +153,13 @@ When transferring B&B to a customer domain (e.g. `booksandbourbon.com`):
 - [ ] Certbot SSL: `certbot --nginx -d booksandbourbon.com`
 
 ### CMS Connection
-- [ ] Update `CMS_API_URL` in `.env.local` to BIB dashboard public URL
-- [ ] OR set up reverse proxy so `localhost:3260` routes to dashboard
-- [ ] Verify API key works from customer domain (CORS headers in CMS route)
+- [ ] Update `CMS_API_URL` in `.env.local` to BIB dashboard public URL (not localhost)
+- [ ] e.g. `CMS_API_URL=https://dashboard.runwellsystems.com`
+- [ ] Verify API key works from customer domain
 
 ### CORS
 - [ ] CMS subscribers route uses `getCorsHeaders(origin)` — verify customer domain is allowed
-- [ ] If CORS is origin-restricted, add customer domain to allowed origins
+- [ ] If CORS is origin-restricted, add customer domain to allowed origins in BIB dashboard
 
 ### Environment
 - [ ] Update `NEXT_PUBLIC_SITE_URL` if used
@@ -110,5 +174,5 @@ When transferring B&B to a customer domain (e.g. `booksandbourbon.com`):
 
 ### Subscribe Form
 - [ ] Verify `/api/subscribe` proxy works from customer domain
-- [ ] Test idempotent subscribe (same email twice)
-- [ ] Verify subscriber appears in BIB dashboard
+- [ ] Test idempotent subscribe (same email twice → 200 OK, no duplicate)
+- [ ] Verify subscriber appears in BIB dashboard under CapitalV tenant
