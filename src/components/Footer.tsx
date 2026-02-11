@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 
@@ -24,6 +27,43 @@ const socialLinks = [
 ]
 
 export function Footer() {
+  const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  async function handleSubscribe(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email.trim() || isSubmitting) return
+
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+    setErrorMessage('')
+
+    try {
+      const response = await fetch('/api/subscribe/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), source: 'footer' }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        setSubmitStatus('error')
+        setErrorMessage(data.error || 'Failed to subscribe.')
+        return
+      }
+
+      setSubmitStatus('success')
+    } catch {
+      setSubmitStatus('error')
+      setErrorMessage('Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <footer className="bg-surface border-t border-text-muted/10">
       <div className="max-w-7xl mx-auto px-6 py-16">
@@ -105,19 +145,34 @@ export function Footer() {
             <p className="text-brand-tan text-sm mb-4">
               Get notified about new episodes and author announcements.
             </p>
-            <form className="flex flex-col gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="form-input text-sm"
-              />
-              <button
-                type="submit"
-                className="bg-brand-burgundy hover:bg-brand-burgundy-light text-brand-cream px-4 py-2.5 text-sm font-medium transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
+            {submitStatus === 'success' ? (
+              <div className="bg-green-900/30 border border-green-700/50 rounded px-4 py-3">
+                <p className="text-green-400 text-sm font-medium">Subscribed!</p>
+                <p className="text-green-400/80 text-xs mt-1">You&apos;ll hear from us soon.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isSubmitting}
+                  className="form-input text-sm"
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-brand-burgundy hover:bg-brand-burgundy-light text-brand-cream px-4 py-2.5 text-sm font-medium transition-colors disabled:opacity-50"
+                >
+                  {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                </button>
+                {submitStatus === 'error' && (
+                  <p className="text-red-400 text-xs">{errorMessage}</p>
+                )}
+              </form>
+            )}
           </div>
         </div>
 
