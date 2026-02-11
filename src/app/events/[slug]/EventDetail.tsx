@@ -46,10 +46,15 @@ export function EventDetail({ event }: { event: CMSEvent }) {
                 day: 'numeric',
               })}
             </span>
-            {event.status === 'recorded' && (
+            {event.status === 'recorded' ? (
               <span className="flex items-center gap-1.5">
                 <Icon icon="mdi:check-circle" className="w-4 h-4 text-brand-gold" />
                 Recorded
+              </span>
+            ) : (
+              <span className="flex items-center gap-1.5">
+                <Icon icon="mdi:clock-outline" className="w-4 h-4 text-brand-gold" />
+                Upcoming
               </span>
             )}
             {event.duration && (
@@ -64,10 +69,14 @@ export function EventDetail({ event }: { event: CMSEvent }) {
             {event.title}
           </h1>
 
-          {event.authorName && (
-            <p className="text-brand-tan text-lg mb-2">
-              with <span className="text-brand-cream">{event.authorName}</span>
-              {event.bookTitle && <> discussing &ldquo;{event.bookTitle}&rdquo;</>}
+          {event.hostName && (
+            <p className="text-brand-tan text-lg mb-1">
+              hosted by <span className="text-brand-cream">{event.hostName}</span>
+            </p>
+          )}
+          {event.bookTitle && (
+            <p className="text-brand-tan/70 text-sm mb-2">
+              discussing &ldquo;{event.bookTitle}&rdquo;{event.authorName && <> by {event.authorName}</>}
             </p>
           )}
         </div>

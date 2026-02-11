@@ -14,7 +14,7 @@ function AccordionItem({ faq, isOpen, onToggle }: { faq: CMSFAQ; isOpen: boolean
     <div className="border-l-4 border-brand-burgundy bg-surface-elevated">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-brand-burgundy/5 transition-colors"
+        className="w-full flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 text-left hover:bg-brand-burgundy/5 transition-colors"
       >
         <span className="font-display text-lg text-brand-cream pr-4">{faq.question}</span>
         <Icon

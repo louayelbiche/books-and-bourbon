@@ -49,6 +49,7 @@ export interface CMSEvent {
   title: string;
   slug: string;
   description: string | null;
+  hostName: string | null;
   authorName: string | null;
   bookTitle: string | null;
   bookId: string | null;

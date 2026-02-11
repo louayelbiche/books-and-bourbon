@@ -60,9 +60,9 @@ export function EventsClient({ events }: { events: CMSEvent[] }) {
       </section>
 
       {/* Filter Tabs */}
-      <section className="bg-surface border-y border-text-muted/10 sticky top-[72px] z-40">
+      <section className="bg-surface border-y border-text-muted/10 sticky top-16 sm:top-[72px] z-40">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex gap-8">
+          <div className="flex gap-2 sm:gap-8 overflow-x-auto scrollbar-hide">
             {([
               ['all', `All Episodes (${events.length})`],
               ['upcoming', `Upcoming (${upcomingEvents.length})`],
@@ -71,7 +71,7 @@ export function EventsClient({ events }: { events: CMSEvent[] }) {
               <button
                 key={key}
                 onClick={() => setFilter(key)}
-                className={`py-4 text-sm font-medium border-b-2 transition-colors ${
+                className={`py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                   filter === key
                     ? 'border-brand-burgundy text-brand-cream'
                     : 'border-transparent text-text-secondary hover:text-brand-cream'
@@ -105,7 +105,7 @@ export function EventsClient({ events }: { events: CMSEvent[] }) {
                   {showDivider && (
                     <div className="flex items-center gap-4 my-8">
                       <div className="h-px flex-1 bg-text-muted/20" />
-                      <span className="text-text-secondary text-sm font-medium uppercase tracking-wider">Past Reads</span>
+                      <span className="text-text-secondary text-sm font-medium uppercase tracking-wider whitespace-nowrap">Past Reads</span>
                       <div className="h-px flex-1 bg-text-muted/20" />
                     </div>
                   )}
@@ -149,18 +149,9 @@ export function EventsClient({ events }: { events: CMSEvent[] }) {
                     </div>
 
                     {/* Content — right side */}
-                    <div className="p-6 md:p-8 flex flex-col justify-center">
-                      <div className="flex items-center gap-4 text-brand-tan/70 text-sm mb-3">
-                        {event.book?.coverImageUrl && (
-                          <Image
-                            src={event.book.coverImageUrl}
-                            alt={event.book.title}
-                            width={48}
-                            height={72}
-                            className="rounded-sm object-cover shadow-md"
-                          />
-                        )}
-                        <div className="flex items-center gap-4">
+                    <div className="p-6 md:p-8">
+                      <div className="flex flex-col justify-center min-w-0">
+                        <div className="flex items-center gap-4 text-brand-tan/70 text-sm mb-3">
                           <span className="flex items-center gap-1">
                             <Icon icon="mdi:calendar" className="w-4 h-4" />
                             {new Date(event.eventDate).toLocaleDateString('en-US', {
@@ -176,24 +167,28 @@ export function EventsClient({ events }: { events: CMSEvent[] }) {
                             </span>
                           )}
                         </div>
+
+                        <h2 className="font-display text-xl md:text-2xl text-brand-cream mb-2 group-hover:text-brand-gold transition-colors">
+                          {event.title}
+                        </h2>
+
+                        {event.hostName && (
+                          <p className="text-brand-tan text-sm mb-1">
+                            hosted by <span className="text-brand-cream">{event.hostName}</span>
+                          </p>
+                        )}
+                        {event.bookTitle && (
+                          <p className="text-brand-tan/70 text-xs mb-3">
+                            discussing &ldquo;{event.bookTitle}&rdquo;{event.authorName && <> by {event.authorName}</>}
+                          </p>
+                        )}
+
+                        {event.description && (
+                          <p className="text-brand-tan/70 text-sm line-clamp-2 md:line-clamp-3">
+                            {event.description}
+                          </p>
+                        )}
                       </div>
-
-                      <h2 className="font-display text-2xl text-brand-cream mb-2 group-hover:text-brand-gold transition-colors">
-                        {event.title}
-                      </h2>
-
-                      {event.authorName && (
-                        <p className="text-brand-tan text-sm mb-3">
-                          with <span className="text-brand-cream">{event.authorName}</span>
-                          {event.bookTitle && <> discussing &ldquo;{event.bookTitle}&rdquo;</>}
-                        </p>
-                      )}
-
-                      {event.description && (
-                        <p className="text-brand-tan/70 text-sm line-clamp-3">
-                          {event.description}
-                        </p>
-                      )}
                     </div>
                   </Link>
                 </div>

@@ -138,11 +138,20 @@ body {
 
 /* Form input styling */
 .form-input {
-  @apply w-full bg-surface border border-text-muted/30 px-4 py-3 text-brand-cream placeholder:text-text-muted focus:border-brand-burgundy focus:outline-none transition-colors duration-300;
+  @apply w-full bg-surface border border-text-muted/30 px-4 py-3 text-base text-brand-cream placeholder:text-text-muted focus:border-brand-burgundy focus:outline-none transition-colors duration-300;
 }
 
 .form-input:focus {
   box-shadow: 0 0 0 2px rgba(59, 15, 17, 0.2);
+}
+
+/* Hide scrollbar for horizontal scroll containers */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 /* Reduced motion */

@@ -23,7 +23,7 @@ export default function BooksClient({ books }: BooksClientProps) {
               No books available yet. Check back soon!
             </p>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
               {books.map((book) => (
                 <div
                   key={book.id}
@@ -79,7 +79,7 @@ export default function BooksClient({ books }: BooksClientProps) {
           onClick={() => setSelectedBook(null)}
         >
           <div
-            className="w-full max-w-3xl bg-surface p-8 md:p-12 relative"
+            className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-surface p-4 sm:p-8 md:p-12 relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
