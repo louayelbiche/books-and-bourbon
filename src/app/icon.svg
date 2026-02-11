@@ -1,7 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="6" fill="#5c1a1a"/>
-  <g transform="translate(-128.8, -22.2) scale(0.108)">
-    <path d="M1355.94,476.26L1260.94,253.38L1215.13,228.40L1309.40,449.54C1309.40,449.54 1321.62,479.59 1355.94,476.26Z" fill="#f5e6d4"/>
-    <path d="M1369.99,365.94L1420.11,253.38L1466.19,228.40L1412.27,348.90C1412.27,348.90 1407.27,365.94 1388.63,365.94L1369.99,365.94Z" fill="#a18320"/>
+  <!-- Open book -->
+  <g transform="translate(16,17)">
+    <!-- Left page -->
+    <path d="M-1,0 C-1,-2 -3,-6 -9,-7 L-9,5 C-3,4.5 -1,2 -1,0Z" fill="#f5e6d4"/>
+    <!-- Right page -->
+    <path d="M1,0 C1,-2 3,-6 9,-7 L9,5 C3,4.5 1,2 1,0Z" fill="#f5e6d4"/>
+    <!-- Spine shadow -->
+    <line x1="0" y1="-8" x2="0" y2="6" stroke="#a18320" stroke-width="1.2" stroke-linecap="round"/>
+    <!-- Left page lines -->
+    <line x1="-7.5" y1="-4" x2="-3" y2="-3" stroke="#5c1a1a" stroke-width="0.5" opacity="0.3"/>
+    <line x1="-7.5" y1="-1.5" x2="-3" y2="-0.8" stroke="#5c1a1a" stroke-width="0.5" opacity="0.3"/>
+    <line x1="-7.5" y1="1" x2="-3" y2="1.2" stroke="#5c1a1a" stroke-width="0.5" opacity="0.3"/>
+    <!-- Right page lines -->
+    <line x1="7.5" y1="-4" x2="3" y2="-3" stroke="#5c1a1a" stroke-width="0.5" opacity="0.3"/>
+    <line x1="7.5" y1="-1.5" x2="3" y2="-0.8" stroke="#5c1a1a" stroke-width="0.5" opacity="0.3"/>
+    <line x1="7.5" y1="1" x2="3" y2="1.2" stroke="#5c1a1a" stroke-width="0.5" opacity="0.3"/>
   </g>
 </svg>
