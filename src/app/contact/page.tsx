@@ -32,9 +32,11 @@ export default function ContactPage() {
     setSubmitStatus('idle')
 
     try {
-      // Using API route for Google Sheets integration
-      const response = await fetch('/api/submit-suggestion', {
+      const googleScriptUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxJsh4DhVF9jpMSowvYFqgyny4XrnBjmjY57bJuSeiUNaMgYcUbRLCUkssokdCRxHoI/exec'
+
+      await fetch(googleScriptUrl, {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -48,12 +50,10 @@ export default function ContactPage() {
         }),
       })
 
-      if (response.ok) {
-        setSubmitStatus('success')
-        setFormData(initialFormData)
-      } else {
-        setSubmitStatus('error')
-      }
+      // no-cors mode doesn't allow reading the response,
+      // so we assume success if no network error was thrown
+      setSubmitStatus('success')
+      setFormData(initialFormData)
     } catch {
       setSubmitStatus('error')
     } finally {
@@ -303,7 +303,7 @@ export default function ContactPage() {
                   Have questions about how Books and Bourbon works?
                 </p>
                 <a
-                  href="#"
+                  href="/faq"
                   className="inline-flex items-center gap-2 text-brand-burgundy-light font-medium hover:text-brand-gold transition-colors"
                 >
                   View FAQ

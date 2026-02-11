@@ -34,15 +34,10 @@ export function Navigation() {
     >
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-brand-burgundy flex items-center justify-center">
-            <Icon icon="mdi:book-open-page-variant" className="w-6 h-6 text-brand-cream" />
-          </div>
-          <div>
-            <span className="font-display text-xl font-semibold text-brand-cream group-hover:text-brand-gold transition-colors">
-              Books & Bourbon
-            </span>
-          </div>
+        <Link href="/" className="group">
+          <span className="font-display text-xl font-semibold text-brand-cream group-hover:text-brand-gold transition-colors">
+            Books & Bourbon
+          </span>
         </Link>
 
         {/* Desktop Navigation */}

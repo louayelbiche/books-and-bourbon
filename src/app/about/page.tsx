@@ -13,19 +13,22 @@ const team = [
   {
     name: 'Jessica Schaefer',
     role: 'Host',
-    photo: 'https://placehold.co/400x400/3b0f11/f5e6d4?text=JS',
+    photo: '/images/team/jessica-schaefer.webp',
+    photoPosition: 'center 25%',
     bio: 'Jessica brings her passion for literature and meaningful conversations to every episode of Books and Bourbon.',
   },
   {
     name: 'Andy Duenas',
     role: 'Host',
     photo: '/images/team/andy-duenas.jpg',
+    photoPosition: 'center 15%',
     bio: 'Andy combines his love of storytelling with deep industry expertise to create engaging discussions.',
   },
   {
     name: 'Patrick Kearns',
     role: 'Host',
     photo: '/images/team/patrick-kearns.jpg',
+    photoPosition: 'center 20%',
     bio: 'Patrick contributes his unique perspective and thoughtful analysis to every literary conversation.',
   },
 ]
@@ -127,6 +130,7 @@ export default function AboutPage() {
                     alt={member.name}
                     fill
                     className="object-cover"
+                    style={{ objectPosition: member.photoPosition }}
                   />
                 </div>
                 <h3 className="font-display text-2xl text-brand-cream mb-1">
