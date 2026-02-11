@@ -84,6 +84,30 @@ The B&B app depends on these BIB CMS routes (all deployed Feb 2026):
 
 **Database:** Prisma schema includes `Subscriber` model with `@@unique([tenantId, email])`. Both staging and production databases have the table and enum created.
 
+## Nginx Configuration
+
+**CRITICAL**: B&B is a Next.js app — nginx MUST use `proxy_pass`, NOT `try_files`.
+
+Wrong (static site):
+```nginx
+root /var/www/books.runwellsystems.com;
+try_files $uri $uri/ /index.html;  # NO — serves stale HTML, no API routes
+```
+
+Correct (Next.js proxy):
+```nginx
+location / {
+    proxy_pass http://localhost:9201;  # YES — proxies to Next.js server
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+Verify: `grep -c proxy_pass /etc/nginx/sites-available/books.runwellsystems.com` — must be > 0.
+
 ## Deployment Steps
 
 ### Staging (port 9202)
@@ -99,9 +123,9 @@ rsync -avz --delete \
 ssh root@72.62.121.234 "cd /opt/books-and-bourbon-staging && \
   sed -i 's|file:../capitalv-brand-kit|file:/opt/capitalv-brand-kit|' package.json"
 
-# 3. Install, build, restart
+# 3. Clear cache, install, build, restart (rm -rf .next is MANDATORY)
 ssh root@72.62.121.234 "cd /opt/books-and-bourbon-staging && \
-  npm install && npm run build && pm2 restart books-and-bourbon-staging"
+  rm -rf .next && npm install && npm run build && pm2 restart books-and-bourbon-staging"
 ```
 
 ### Production (port 9201)
@@ -117,9 +141,23 @@ rsync -avz --delete \
 ssh root@72.62.121.234 "cd /opt/books-and-bourbon && \
   sed -i 's|file:../capitalv-brand-kit|file:/opt/capitalv-brand-kit|' package.json"
 
-# 3. Install, build, restart
+# 3. Clear cache, install, build, restart (rm -rf .next is MANDATORY)
 ssh root@72.62.121.234 "cd /opt/books-and-bourbon && \
-  npm install && npm run build && pm2 restart books-and-bourbon"
+  rm -rf .next && npm install && npm run build && pm2 restart books-and-bourbon"
+```
+
+### PM2 Directory Check
+
+If PM2 was previously started from a different directory, `pm2 restart` keeps the old `exec cwd`. Verify and fix:
+
+```bash
+# Check current working directory
+pm2 show books-and-bourbon | grep 'exec cwd'
+
+# If wrong, delete and recreate
+pm2 delete books-and-bourbon
+cd /opt/books-and-bourbon && pm2 start npm --name books-and-bourbon -- start -- -p 9201
+pm2 save
 ```
 
 ### Verify After Deploy
