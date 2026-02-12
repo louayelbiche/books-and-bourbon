@@ -85,6 +85,7 @@ export function BBChat() {
       assistantLabel="Books & Bourbon"
       poweredByLabel=""
       poweredByFooter={false}
+      enableVoice={false}
       initialSuggestions={[
         'What events are coming up?',
         'Tell me about the book club',
