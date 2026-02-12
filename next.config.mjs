@@ -9,6 +9,7 @@ const nextConfig = {
     ],
   },
   trailingSlash: true,
+  transpilePackages: ['@runwell/concierge-shared', '@runwell/agent-core'],
 }
 
 export default nextConfig

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
+import { BBChat } from '@/components/chat/BBChat'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className="bg-brand-black text-brand-cream min-h-screen">
         <Navigation />
         <main>{children}</main>
+        <BBChat />
         <Footer />
       </body>
     </html>
