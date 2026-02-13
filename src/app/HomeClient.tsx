@@ -60,6 +60,23 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents }: HomeCl
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url('/images/hero-bg.png')` }}
           />
+          {/* Animated Smoke Layers */}
+          <div
+            className="absolute inset-0 z-[1]"
+            style={{
+              background: 'radial-gradient(ellipse 80% 60% at 30% 60%, rgba(245,230,212,0.12) 0%, transparent 70%)',
+              filter: 'blur(40px)',
+              animation: 'smoke-drift-1 12s ease-in-out infinite',
+            }}
+          />
+          <div
+            className="absolute inset-0 z-[1]"
+            style={{
+              background: 'radial-gradient(ellipse 70% 50% at 70% 50%, rgba(245,230,212,0.10) 0%, transparent 70%)',
+              filter: 'blur(50px)',
+              animation: 'smoke-drift-2 16s ease-in-out infinite',
+            }}
+          />
           {/* Dark Overlay with Burgundy Tint */}
           <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-brand-black/70 to-brand-black" />
           <div className="absolute inset-0 bg-brand-burgundy/20 mix-blend-multiply" />
