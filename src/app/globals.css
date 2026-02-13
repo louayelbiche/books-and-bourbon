@@ -154,49 +154,6 @@ body {
   display: none;
 }
 
-/* Smoke drift animations */
-@keyframes smoke-drift-1 {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.06;
-  }
-  25% {
-    transform: translate(40px, -30px) scale(1.1);
-    opacity: 0.09;
-  }
-  50% {
-    transform: translate(-20px, -60px) scale(1.2);
-    opacity: 0.05;
-  }
-  75% {
-    transform: translate(30px, -40px) scale(1.05);
-    opacity: 0.08;
-  }
-  100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.06;
-  }
-}
-
-@keyframes smoke-drift-2 {
-  0% {
-    transform: translate(0, 0) scale(1.1);
-    opacity: 0.05;
-  }
-  30% {
-    transform: translate(-50px, -20px) scale(1.2);
-    opacity: 0.08;
-  }
-  60% {
-    transform: translate(30px, -50px) scale(1);
-    opacity: 0.04;
-  }
-  100% {
-    transform: translate(0, 0) scale(1.1);
-    opacity: 0.05;
-  }
-}
-
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
