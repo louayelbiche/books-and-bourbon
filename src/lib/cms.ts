@@ -1,3 +1,5 @@
+import { saveSnapshot, loadSnapshot } from './cms-snapshot';
+
 const CMS_API_URL = process.env.CMS_API_URL || '';
 const CMS_API_KEY = process.env.CMS_API_KEY || '';
 
@@ -12,10 +14,14 @@ async function cmsGet<T>(path: string, options: FetchOptions = {}): Promise<T | 
 
   try {
     const url = `${CMS_API_URL}${path}`;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
     const response = await fetch(url, {
       headers: { 'x-api-key': CMS_API_KEY },
       next: { revalidate: options.revalidate ?? 3600 },
+      signal: controller.signal,
     });
+    clearTimeout(timeout);
 
     if (!response.ok) {
       console.error(`CMS API error: ${response.status} for ${path}`);
@@ -115,7 +121,11 @@ export async function fetchEvents(params?: {
   const qs = searchParams.toString();
   const path = `/api/cms/v1/events${qs ? `?${qs}` : ''}`;
   const result = await cmsGet<EventsResponse>(path);
-  return result?.data ?? [];
+  if (result) {
+    saveSnapshot('events', result.data);
+    return result.data;
+  }
+  return loadSnapshot<CMSEvent[]>('events') ?? [];
 }
 
 export async function fetchBooks(params?: {
@@ -131,7 +141,11 @@ export async function fetchBooks(params?: {
   const qs = searchParams.toString();
   const path = `/api/cms/v1/books${qs ? `?${qs}` : ''}`;
   const result = await cmsGet<BooksResponse>(path);
-  return result?.data ?? [];
+  if (result) {
+    saveSnapshot('books', result.data);
+    return result.data;
+  }
+  return loadSnapshot<CMSBook[]>('books') ?? [];
 }
 
 export async function fetchFAQs(params?: {
@@ -143,11 +157,19 @@ export async function fetchFAQs(params?: {
   const qs = searchParams.toString();
   const path = `/api/cms/v1/faqs${qs ? `?${qs}` : ''}`;
   const result = await cmsGet<FAQsResponse>(path);
-  return result?.data ?? [];
+  if (result) {
+    saveSnapshot('faqs', result.data);
+    return result.data;
+  }
+  return loadSnapshot<CMSFAQ[]>('faqs') ?? [];
 }
 
 export async function fetchContent(type: string): Promise<Record<string, unknown>[]> {
   const path = `/api/cms/v1/content/${type}`;
   const result = await cmsGet<ContentResponse>(path);
-  return result?.data ?? [];
+  if (result) {
+    saveSnapshot(`content-${type}`, result.data);
+    return result.data;
+  }
+  return loadSnapshot<Record<string, unknown>[]>(`content-${type}`) ?? [];
 }

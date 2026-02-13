@@ -13,6 +13,7 @@
 
 import { fetchEvents, fetchBooks, fetchFAQs } from '@/lib/cms';
 import type { CMSEvent, CMSBook, CMSFAQ } from '@/lib/cms';
+import { saveSnapshot, loadSnapshot } from '@/lib/cms-snapshot';
 
 // ── Cache ──────────────────────────────────────────────────────────
 
@@ -47,13 +48,14 @@ async function fetchAndCache(): Promise<string> {
     // Don't cache empty/fallback results — CMS might be temporarily down
     if (text !== CMS_EMPTY_FALLBACK) {
       cachedKnowledge = { text, fetchedAt: Date.now() };
+      saveSnapshot('knowledge', text);
     }
     return text;
   } catch (error) {
     console.error('[knowledge] CMS fetch failed:', error);
-    // Return stale cache if available, otherwise fallback
+    // Return stale cache if available, then filesystem snapshot, then fallback
     if (cachedKnowledge) return cachedKnowledge.text;
-    return CMS_EMPTY_FALLBACK;
+    return loadSnapshot<string>('knowledge') ?? CMS_EMPTY_FALLBACK;
   }
 }
 

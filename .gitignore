@@ -29,6 +29,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# cms snapshots (self-seeds on first successful fetch)
+/cms-snapshots
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
