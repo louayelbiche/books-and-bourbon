@@ -15,7 +15,7 @@ async function cmsGet<T>(path: string, options: FetchOptions = {}): Promise<T | 
   try {
     const url = `${CMS_API_URL}${path}`;
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
+    const timeout = setTimeout(() => controller.abort(), 3000);
     const response = await fetch(url, {
       headers: { 'x-api-key': CMS_API_KEY },
       next: { revalidate: options.revalidate ?? 3600 },
@@ -120,12 +120,24 @@ export async function fetchEvents(params?: {
 
   const qs = searchParams.toString();
   const path = `/api/cms/v1/events${qs ? `?${qs}` : ''}`;
+
+  // Snapshot-first: return cached data instantly if available
+  const snapshot = loadSnapshot<CMSEvent[]>('events');
+  if (snapshot) {
+    // Fire-and-forget: refresh snapshot in background
+    void cmsGet<EventsResponse>(path).then(result => {
+      if (result) saveSnapshot('events', result.data);
+    }).catch(() => {});
+    return snapshot;
+  }
+
+  // No snapshot — must wait for CMS (cold start only)
   const result = await cmsGet<EventsResponse>(path);
   if (result) {
     saveSnapshot('events', result.data);
     return result.data;
   }
-  return loadSnapshot<CMSEvent[]>('events') ?? [];
+  return [];
 }
 
 export async function fetchBooks(params?: {
@@ -140,12 +152,21 @@ export async function fetchBooks(params?: {
 
   const qs = searchParams.toString();
   const path = `/api/cms/v1/books${qs ? `?${qs}` : ''}`;
+
+  const snapshot = loadSnapshot<CMSBook[]>('books');
+  if (snapshot) {
+    void cmsGet<BooksResponse>(path).then(result => {
+      if (result) saveSnapshot('books', result.data);
+    }).catch(() => {});
+    return snapshot;
+  }
+
   const result = await cmsGet<BooksResponse>(path);
   if (result) {
     saveSnapshot('books', result.data);
     return result.data;
   }
-  return loadSnapshot<CMSBook[]>('books') ?? [];
+  return [];
 }
 
 export async function fetchFAQs(params?: {
@@ -156,20 +177,38 @@ export async function fetchFAQs(params?: {
 
   const qs = searchParams.toString();
   const path = `/api/cms/v1/faqs${qs ? `?${qs}` : ''}`;
+
+  const snapshot = loadSnapshot<CMSFAQ[]>('faqs');
+  if (snapshot) {
+    void cmsGet<FAQsResponse>(path).then(result => {
+      if (result) saveSnapshot('faqs', result.data);
+    }).catch(() => {});
+    return snapshot;
+  }
+
   const result = await cmsGet<FAQsResponse>(path);
   if (result) {
     saveSnapshot('faqs', result.data);
     return result.data;
   }
-  return loadSnapshot<CMSFAQ[]>('faqs') ?? [];
+  return [];
 }
 
 export async function fetchContent(type: string): Promise<Record<string, unknown>[]> {
   const path = `/api/cms/v1/content/${type}`;
+
+  const snapshot = loadSnapshot<Record<string, unknown>[]>(`content-${type}`);
+  if (snapshot) {
+    void cmsGet<ContentResponse>(path).then(result => {
+      if (result) saveSnapshot(`content-${type}`, result.data);
+    }).catch(() => {});
+    return snapshot;
+  }
+
   const result = await cmsGet<ContentResponse>(path);
   if (result) {
     saveSnapshot(`content-${type}`, result.data);
     return result.data;
   }
-  return loadSnapshot<Record<string, unknown>[]>(`content-${type}`) ?? [];
+  return [];
 }
