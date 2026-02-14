@@ -1,4 +1,4 @@
-import { saveSnapshot, loadSnapshot } from './cms-snapshot';
+import { saveSnapshot, loadSnapshot } from '@runwell/cms-snapshot';
 
 const CMS_API_URL = process.env.CMS_API_URL || '';
 const CMS_API_KEY = process.env.CMS_API_KEY || '';

@@ -13,7 +13,7 @@
 
 import { fetchEvents, fetchBooks, fetchFAQs } from '@/lib/cms';
 import type { CMSEvent, CMSBook, CMSFAQ } from '@/lib/cms';
-import { saveSnapshot, loadSnapshot } from '@/lib/cms-snapshot';
+import { saveSnapshot, loadSnapshot } from '@runwell/cms-snapshot';
 
 // ── Cache ──────────────────────────────────────────────────────────
 

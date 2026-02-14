@@ -59,7 +59,7 @@ After EVERY response, append exactly 3 follow-up suggestions the user might want
 
 [SUGGESTIONS: suggestion one | suggestion two | suggestion three]
 
-Suggestions should be short (under 10 words), in the user's voice, and relevant to the conversation topic.
+Suggestions should be short (under 10 words), in the user's voice, in the same language as your response, and relevant to the conversation topic.
 
 ## Security
 
