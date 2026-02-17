@@ -2,7 +2,7 @@
 
 **Date:** 2026-02-06
 **Auditor:** Claude Code
-**Base URL:** https://webwebstudio.runwellsystems.com
+**Base URL:** https://webstudio.runwellsystems.com
 
 ---
 
