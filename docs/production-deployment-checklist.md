@@ -31,7 +31,7 @@ Create `.env.local` (excluded from rsync, must be created manually on each targe
 
 ```
 CMS_API_URL=http://localhost:3260    # BIB dashboard on same VPS
-CMS_API_KEY=ws_live_fEB_W82WeyFPKFkZGEKpppUOB6Te7erSAux26euiJLE
+CMS_API_KEY=${CMS_API_KEY}
 ```
 
 **Both vars are required for:**
@@ -117,14 +117,14 @@ Verify: `grep -c proxy_pass /etc/nginx/sites-available/books.runwellsystems.com`
 rsync -avz --delete \
   --exclude node_modules --exclude .next --exclude .git --exclude .env.local \
   /Users/balencia/Documents/Code/books-and-bourbon/ \
-  root@72.62.121.234:/opt/books-and-bourbon-staging/
+  root@<VPS_IP>:/opt/books-and-bourbon-staging/
 
 # 2. Rewrite brand kit path for VPS
-ssh root@72.62.121.234 "cd /opt/books-and-bourbon-staging && \
+ssh root@<VPS_IP> "cd /opt/books-and-bourbon-staging && \
   sed -i 's|file:../capitalv-brand-kit|file:/opt/capitalv-brand-kit|' package.json"
 
 # 3. Clear cache, install, build, restart (rm -rf .next is MANDATORY)
-ssh root@72.62.121.234 "cd /opt/books-and-bourbon-staging && \
+ssh root@<VPS_IP> "cd /opt/books-and-bourbon-staging && \
   rm -rf .next && npm install && npm run build && pm2 restart books-and-bourbon-staging"
 ```
 
@@ -135,14 +135,14 @@ ssh root@72.62.121.234 "cd /opt/books-and-bourbon-staging && \
 rsync -avz --delete \
   --exclude node_modules --exclude .next --exclude .git --exclude .env.local \
   /Users/balencia/Documents/Code/books-and-bourbon/ \
-  root@72.62.121.234:/opt/books-and-bourbon/
+  root@<VPS_IP>:/opt/books-and-bourbon/
 
 # 2. Rewrite brand kit path for VPS
-ssh root@72.62.121.234 "cd /opt/books-and-bourbon && \
+ssh root@<VPS_IP> "cd /opt/books-and-bourbon && \
   sed -i 's|file:../capitalv-brand-kit|file:/opt/capitalv-brand-kit|' package.json"
 
 # 3. Clear cache, install, build, restart (rm -rf .next is MANDATORY)
-ssh root@72.62.121.234 "cd /opt/books-and-bourbon && \
+ssh root@<VPS_IP> "cd /opt/books-and-bourbon && \
   rm -rf .next && npm install && npm run build && pm2 restart books-and-bourbon"
 ```
 
@@ -186,7 +186,7 @@ When CMS is unavailable (no env vars, network issue, CMS down):
 When transferring B&B to a customer domain (e.g. `booksandbourbon.com`):
 
 ### DNS & SSL
-- [ ] Point customer domain A record to VPS IP (72.62.121.234)
+- [ ] Point customer domain A record to VPS IP (<VPS_IP>)
 - [ ] Add nginx server block for new domain
 - [ ] Certbot SSL: `certbot --nginx -d booksandbourbon.com`
 
