@@ -11,6 +11,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Override display font for elevated typography
+      fontFamily: {
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
+      },
       // Site-specific extensions (brand kit provides base colors)
       colors: {
         // Aliases for backwards compatibility with existing classes

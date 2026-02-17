@@ -12,7 +12,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'Books and Bourbon | Literary Conversations',
-  description: 'Moderated speaking sessions between acclaimed authors and passionate hosts. Watch recorded conversations, discover books, and join our literary community.',
+  description: 'An author-led series featuring moderated conversations on literature, ideas, and craft. Watch recorded conversations, discover books, and join our literary community.',
   keywords: 'books, bourbon, author talks, literary events, book discussions, author interviews',
   openGraph: {
     title: 'Books and Bourbon | Literary Conversations',

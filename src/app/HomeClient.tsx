@@ -90,9 +90,10 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents }: HomeCl
               )
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-text-secondary max-w-2xl mx-auto mb-10 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            Where great literature meets spirited conversation.
-            Moderated discussions with acclaimed authors.
+          <span className="accent-line mt-6 mb-8 animate-slide-up" style={{ animationDelay: '0.15s' }} />
+          <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 animate-slide-up tracking-wide" style={{ animationDelay: '0.2s' }}>
+            An author-led series featuring moderated conversations
+            on literature, ideas, and craft.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
             <Link href="/events" className="btn-primary">
