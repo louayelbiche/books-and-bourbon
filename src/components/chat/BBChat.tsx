@@ -91,6 +91,7 @@ export function BBChat() {
         'Tell me about the book club',
         'How do I attend an event?',
       ]}
+      cardConfig={{ maxCardsPerMessage: 3, clickBehavior: 'auto' }}
     />
   );
 }

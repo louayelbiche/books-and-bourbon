@@ -7,6 +7,7 @@
  */
 
 import { BaseDemoAgent } from '@runwell/concierge-shared/agent';
+import { buildCardPromptFragment } from '@runwell/bib-concierge/suggestions';
 
 export class BBConciergeAgent extends BaseDemoAgent {
   private knowledge: string;
@@ -53,13 +54,7 @@ ${this.knowledge}
 - When mentioning books, use quotation marks around titles
 - When relevant, encourage people to attend upcoming events
 
-## Follow-Up Suggestions
-
-After EVERY response, append exactly 3 follow-up suggestions the user might want to ask next. Format them on a single line at the very end:
-
-[SUGGESTIONS: suggestion one | suggestion two | suggestion three]
-
-Suggestions should be short (under 10 words), in the user's voice, in the same language as your response, and relevant to the conversation topic.
+${buildCardPromptFragment({ mode: 'concierge', perspective: 'user-asks-bot', enableCards: true, cardTypes: ['event', 'page'], enableActions: false, maxCards: 3 }).promptText}
 
 ## Security
 
