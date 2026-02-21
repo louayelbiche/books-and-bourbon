@@ -1,39 +1,57 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
+import { fetchSiteImages, fetchPageContent, DEFAULT_PAGE_CONTENT, type CMSTeamPhoto } from '@/lib/cms'
 
-const stats = [
-  { value: '50+', label: 'Episodes Recorded' },
-  { value: '40+', label: 'Authors Featured' },
-  { value: '100K+', label: 'Community Members' },
-  { value: '25+', label: 'Partner Publishers' },
-]
-
-const team = [
+const defaultTeam = [
   {
     name: 'Jessica Schaefer',
     role: 'Host',
-    photo: '/images/team/jessica-schaefer.webp',
+    imageUrl: '/images/team/jessica-schaefer.webp',
     photoPosition: 'center 25%',
     bio: 'Jessica brings her passion for literature and meaningful conversations to every episode of Books and Bourbon.',
   },
   {
     name: 'Andy Duenas',
     role: 'Host',
-    photo: '/images/team/andy-duenas.jpg',
+    imageUrl: '/images/team/andy-duenas.jpg',
     photoPosition: 'center 15%',
     bio: 'Andy combines his love of storytelling with deep industry expertise to create engaging discussions.',
   },
   {
     name: 'Patrick Kearns',
     role: 'Host',
-    photo: '/images/team/patrick-kearns.jpg',
+    imageUrl: '/images/team/patrick-kearns.jpg',
     photoPosition: 'center 20%',
     bio: 'Patrick contributes his unique perspective and thoughtful analysis to every literary conversation.',
   },
 ]
 
-export default function AboutPage() {
+const DEFAULT_ABOUT_IMAGE = '/images/about-mission.jpg'
+const DEFAULT_CTA_BG = '/images/cta-join-conversation.jpg'
+
+export const revalidate = 3600
+
+export default async function AboutPage() {
+  const [siteImages, pageContent] = await Promise.all([
+    fetchSiteImages(),
+    fetchPageContent(),
+  ])
+
+  const about = pageContent.about || DEFAULT_PAGE_CONTENT.about
+  const heroContent = about.hero || DEFAULT_PAGE_CONTENT.about.hero
+  const mission = about.mission || DEFAULT_PAGE_CONTENT.about.mission
+  const stats = about.stats?.length > 0 ? about.stats : DEFAULT_PAGE_CONTENT.about.stats
+  const teamHeadings = about.team || DEFAULT_PAGE_CONTENT.about.team
+  const values = about.values || DEFAULT_PAGE_CONTENT.about.values
+  const cta = about.cta || DEFAULT_PAGE_CONTENT.about.cta
+
+  const team: CMSTeamPhoto[] = siteImages.teamPhotos.length > 0
+    ? siteImages.teamPhotos
+    : defaultTeam
+
+  const aboutImage = siteImages.aboutHeroImage || DEFAULT_ABOUT_IMAGE
+  const ctaBackground = siteImages.ctaBackground || DEFAULT_CTA_BG
   return (
     <>
       {/* Hero Section */}
@@ -41,13 +59,13 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-gradient-radial from-brand-burgundy/10 via-transparent to-transparent" />
         <div className="max-w-7xl mx-auto px-6 relative">
           <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
-            Our Story
+            {heroContent.eyebrow}
           </p>
           <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-brand-cream mb-6 max-w-4xl">
-            Where Literature Meets <span className="text-gradient">Conversation</span>
+            {heroContent.title}
           </h1>
           <p className="text-text-secondary text-xl max-w-2xl">
-            Books and Bourbon began with a simple idea: bring readers closer to the authors they love through intimate, thoughtful conversations.
+            {heroContent.description}
           </p>
         </div>
       </section>
@@ -58,23 +76,19 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="font-display text-4xl text-brand-cream mb-6">
-                Our Mission
+                {mission.heading}
               </h2>
-              <p className="text-text-secondary leading-relaxed mb-6">
-                In an age of endless content, we believe in the power of deep, meaningful conversations about literature. Our mission is to create a space where authors can share not just their work, but their creative process, inspirations, and the stories behind the stories.
-              </p>
-              <p className="text-text-secondary leading-relaxed mb-6">
-                Every episode is a carefully curated experience, designed to give our audience insights they cannot find anywhere else. We pair each discussion with a carefully selected bourbon, creating an atmosphere of warmth and sophistication.
-              </p>
-              <p className="text-text-secondary leading-relaxed">
-                Whether you&apos;re a dedicated bibliophile or simply curious about the world of books, Books and Bourbon offers a unique window into the minds of today&apos;s most compelling writers.
-              </p>
+              {mission.paragraphs.map((paragraph, i) => (
+                <p key={i} className={`text-text-secondary leading-relaxed ${i < mission.paragraphs.length - 1 ? 'mb-6' : ''}`}>
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
             <div className="relative">
               <div className="aspect-square relative burgundy-glow">
                 <Image
-                  src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800"
+                  src={aboutImage}
                   alt="Books and conversation"
                   fill
                   className="object-cover"
@@ -82,8 +96,8 @@ export default function AboutPage() {
               </div>
               <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-brand-burgundy flex items-center justify-center">
                 <div className="text-center">
-                  <p className="font-display text-4xl text-brand-cream">5+</p>
-                  <p className="text-brand-cream/80 text-sm">Years of Stories</p>
+                  <p className="font-display text-4xl text-brand-cream">{mission.statValue}</p>
+                  <p className="text-brand-cream/80 text-sm">{mission.statLabel}</p>
                 </div>
               </div>
             </div>
@@ -114,10 +128,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
-              The Hosts
+              {teamHeadings.eyebrow}
             </p>
             <h2 className="font-display text-4xl md:text-5xl text-brand-cream">
-              Meet the Team
+              {teamHeadings.heading}
             </h2>
           </div>
 
@@ -126,11 +140,11 @@ export default function AboutPage() {
               <div key={member.name} className="text-center">
                 <div className="w-48 h-48 mx-auto relative mb-6 burgundy-glow rounded-full overflow-hidden">
                   <Image
-                    src={member.photo}
+                    src={member.imageUrl}
                     alt={member.name}
                     fill
                     className="object-cover"
-                    style={{ objectPosition: member.photoPosition }}
+                    style={{ objectPosition: member.photoPosition || 'center' }}
                   />
                 </div>
                 <h3 className="font-display text-2xl text-brand-cream mb-1">
@@ -153,68 +167,46 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
-              What Drives Us
+              {values.eyebrow}
             </p>
             <h2 className="font-display text-4xl md:text-5xl text-brand-cream">
-              Our Values
+              {values.heading}
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-brand-black p-8 card-hover">
-              <div className="w-12 h-12 bg-brand-burgundy flex items-center justify-center mb-6">
-                <Icon icon="mdi:book-open-variant" className="w-6 h-6 text-brand-cream" />
+            {values.cards.map((card) => (
+              <div key={card.title} className="bg-brand-black p-8 card-hover">
+                <div className="w-12 h-12 bg-brand-burgundy flex items-center justify-center mb-6">
+                  <Icon icon={card.icon} className="w-6 h-6 text-brand-cream" />
+                </div>
+                <h3 className="font-display text-xl text-brand-cream mb-3">
+                  {card.title}
+                </h3>
+                <p className="text-text-secondary text-sm">
+                  {card.description}
+                </p>
               </div>
-              <h3 className="font-display text-xl text-brand-cream mb-3">
-                Literary Excellence
-              </h3>
-              <p className="text-text-secondary text-sm">
-                We curate only the finest works and most compelling authors, ensuring every episode offers genuine literary value.
-              </p>
-            </div>
-
-            <div className="bg-brand-black p-8 card-hover">
-              <div className="w-12 h-12 bg-brand-burgundy flex items-center justify-center mb-6">
-                <Icon icon="mdi:account-group" className="w-6 h-6 text-brand-cream" />
-              </div>
-              <h3 className="font-display text-xl text-brand-cream mb-3">
-                Community First
-              </h3>
-              <p className="text-text-secondary text-sm">
-                Our audience is at the heart of everything we do. We actively seek and incorporate community feedback and suggestions.
-              </p>
-            </div>
-
-            <div className="bg-brand-black p-8 card-hover">
-              <div className="w-12 h-12 bg-brand-burgundy flex items-center justify-center mb-6">
-                <Icon icon="mdi:microphone" className="w-6 h-6 text-brand-cream" />
-              </div>
-              <h3 className="font-display text-xl text-brand-cream mb-3">
-                Authentic Voices
-              </h3>
-              <p className="text-text-secondary text-sm">
-                We create an environment where authors feel comfortable sharing their true selves, beyond the polished public persona.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-24 bg-gradient-burgundy relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1920')] bg-cover bg-center mix-blend-overlay opacity-10" />
+        <div className={`absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-10`} style={{ backgroundImage: `url('${ctaBackground}')` }} />
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
           <h2 className="font-display text-4xl md:text-5xl text-brand-cream mb-6">
-            Join the Conversation
+            {cta.heading}
           </h2>
           <p className="text-brand-cream/80 text-lg mb-10">
-            Have a book you&apos;d love us to feature? An author you think our audience would enjoy? We want to hear from you.
+            {cta.description}
           </p>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 bg-brand-black text-brand-cream px-8 py-4 font-medium tracking-wide hover:bg-brand-black/80 transition-colors"
           >
-            Get in Touch
+            {cta.buttonText}
             <Icon icon="mdi:arrow-right" className="w-5 h-5" />
           </Link>
         </div>

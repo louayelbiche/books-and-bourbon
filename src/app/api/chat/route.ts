@@ -15,6 +15,7 @@ const handler = createChatHandler({
     return new BBConciergeAgent(s.knowledge);
   },
   parseResponse: parseStructuredResponse,
+  allowedOrigins: ['books.runwellsystems.com'],
 });
 
 export const POST = handler;

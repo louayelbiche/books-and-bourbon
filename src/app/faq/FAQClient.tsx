@@ -7,6 +7,8 @@ import type { CMSFAQ } from '@/lib/cms'
 
 interface FAQClientProps {
   faqs: CMSFAQ[]
+  header?: { eyebrow: string; title: string; description: string }
+  cta?: { heading: string; description: string; buttonText: string }
 }
 
 function AccordionItem({ faq, isOpen, onToggle }: { faq: CMSFAQ; isOpen: boolean; onToggle: () => void }) {
@@ -37,7 +39,7 @@ function AccordionItem({ faq, isOpen, onToggle }: { faq: CMSFAQ; isOpen: boolean
   )
 }
 
-export function FAQClient({ faqs }: FAQClientProps) {
+export function FAQClient({ faqs, header, cta }: FAQClientProps) {
   const [openId, setOpenId] = useState<string | null>(null)
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
@@ -54,13 +56,13 @@ export function FAQClient({ faqs }: FAQClientProps) {
       <section className="pt-32 pb-16 bg-brand-black">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
-            Help Center
+            {header?.eyebrow || 'Help Center'}
           </p>
           <h1 className="font-display text-5xl md:text-6xl text-brand-cream mb-6">
-            Frequently Asked Questions
+            {header?.title || 'Frequently Asked Questions'}
           </h1>
           <p className="text-text-secondary text-lg max-w-2xl">
-            Find answers to common questions about Books and Bourbon, our events, and how to get involved.
+            {header?.description || 'Find answers to common questions about Books and Bourbon, our events, and how to get involved.'}
           </p>
         </div>
       </section>
@@ -113,16 +115,16 @@ export function FAQClient({ faqs }: FAQClientProps) {
           <div className="mt-16 text-center">
             <div className="p-8 bg-brand-black">
               <h2 className="font-display text-2xl text-brand-cream mb-3">
-                Still Have Questions?
+                {cta?.heading || 'Still Have Questions?'}
               </h2>
               <p className="text-brand-tan mb-6">
-                Can&apos;t find what you&apos;re looking for? We&apos;d love to hear from you.
+                {cta?.description || "Can't find what you're looking for? We'd love to hear from you."}
               </p>
               <Link
                 href="/contact"
                 className="btn-primary inline-flex items-center gap-2"
               >
-                Contact Us
+                {cta?.buttonText || 'Contact Us'}
                 <Icon icon="mdi:arrow-right" className="w-4 h-4" />
               </Link>
             </div>

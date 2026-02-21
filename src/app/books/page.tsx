@@ -1,4 +1,4 @@
-import { fetchBooks } from '@/lib/cms'
+import { fetchBooks, fetchPageContent, DEFAULT_PAGE_CONTENT } from '@/lib/cms'
 import BooksClient from './BooksClient'
 
 export const revalidate = 3600
@@ -22,8 +22,12 @@ const fallbackBooks = [
 ]
 
 export default async function BooksPage() {
-  const cmsBooks = await fetchBooks()
+  const [cmsBooks, pageContent] = await Promise.all([
+    fetchBooks(),
+    fetchPageContent(),
+  ])
   const books = cmsBooks.length > 0 ? cmsBooks : fallbackBooks
+  const header = pageContent.books?.header || DEFAULT_PAGE_CONTENT.books.header
 
   return (
     <>
@@ -31,13 +35,13 @@ export default async function BooksPage() {
       <section className="pt-32 pb-16 bg-brand-black">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
-            Our Library
+            {header.eyebrow}
           </p>
           <h1 className="font-display text-5xl md:text-6xl text-brand-cream mb-6">
-            Featured Books
+            {header.title}
           </h1>
           <p className="text-text-secondary text-lg max-w-2xl">
-            Discover the books discussed in our sessions. Each title has been carefully selected for its literary merit and conversation-worthy themes.
+            {header.description}
           </p>
         </div>
       </section>

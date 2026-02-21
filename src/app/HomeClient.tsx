@@ -7,13 +7,41 @@ import { useEffect, useRef, useState } from 'react'
 import type { CMSEvent } from '@/lib/cms'
 import { VideoModal } from '@/components/VideoModal'
 
+interface HomeHero {
+  eyebrow: string; title: string; subtitle: string; primaryCTA: string; secondaryCTA: string
+}
+
+interface HomeSuggestBook {
+  eyebrow: string; title: string; paragraph: string; buttonText: string
+}
+
+interface HomeContent {
+  hero: HomeHero
+  suggestBook: HomeSuggestBook
+}
+
 interface HomeClientProps {
   featuredEvent: CMSEvent
   upcomingEvents: CMSEvent[]
   pastEvents: CMSEvent[]
+  heroBackground?: string
+  homeContent?: HomeContent
 }
 
-export function HomeClient({ featuredEvent, upcomingEvents, pastEvents }: HomeClientProps) {
+export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBackground = '/images/hero-bg.png', homeContent }: HomeClientProps) {
+  const hero = homeContent?.hero || {
+    eyebrow: 'Literary Conversations',
+    title: 'Books and Bourbon',
+    subtitle: 'An author-led series featuring moderated conversations on literature, ideas, and craft.',
+    primaryCTA: 'View Events',
+    secondaryCTA: 'Contact Us',
+  }
+  const suggest = homeContent?.suggestBook || {
+    eyebrow: 'Your Turn',
+    title: 'Got a Book We Should Read?',
+    paragraph: 'The best conversations start with great recommendations.\nTell us what book deserves a seat at the table.',
+    buttonText: 'Suggest a Book',
+  }
   const revealRefs = useRef<HTMLElement[]>([])
   const [videoEvent, setVideoEvent] = useState<CMSEvent | null>(null)
 
@@ -58,7 +86,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents }: HomeCl
         <div className="absolute inset-0 z-0">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/images/hero-bg.png')` }}
+            style={{ backgroundImage: `url('${heroBackground}')` }}
           />
           {/* Dark Overlay with Burgundy Tint */}
           <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-brand-black/70 to-brand-black" />
@@ -68,7 +96,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents }: HomeCl
         {/* Hero Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
           <p className="text-brand-burgundy-light font-medium tracking-[0.3em] uppercase text-sm mb-6 animate-fade-in">
-            Literary Conversations
+            {hero.eyebrow}
           </p>
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-semibold text-brand-cream mb-6 animate-slide-up">
             Books and <span className="text-gradient">Bourbon</span>
@@ -92,21 +120,20 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents }: HomeCl
           </h1>
           <span className="accent-line mt-6 mb-8 animate-slide-up" style={{ animationDelay: '0.15s' }} />
           <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 animate-slide-up tracking-wide" style={{ animationDelay: '0.2s' }}>
-            An author-led series featuring moderated conversations
-            on literature, ideas, and craft.
+            {hero.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
             <Link href="/events" className="btn-primary">
               <span className="flex items-center gap-2">
                 <Icon icon="mdi:calendar" className="w-5 h-5" />
-                View Events
+                {hero.primaryCTA}
               </span>
             </Link>
             <Link
               href="/contact"
               className="px-8 py-4 border border-brand-cream/30 text-brand-cream font-medium tracking-wide hover:bg-brand-cream/10 transition-all duration-300"
             >
-              Contact Us
+              {hero.secondaryCTA}
             </Link>
           </div>
         </div>
@@ -346,15 +373,13 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents }: HomeCl
         <div className="max-w-5xl mx-auto px-6 text-center">
           <div ref={addToRefs} className="reveal">
             <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
-              Your Turn
+              {suggest.eyebrow}
             </p>
             <h2 className="font-display text-4xl md:text-5xl text-brand-cream mb-6">
-              Got a Book We Should Read?
+              {suggest.title}
             </h2>
-            <p className="text-text-secondary text-lg mb-10 max-w-xl mx-auto">
-              The best conversations start with great recommendations.
-              <br />
-              Tell us what book deserves a seat at the table.
+            <p className="text-text-secondary text-lg mb-10 max-w-xl mx-auto whitespace-pre-line">
+              {suggest.paragraph}
             </p>
             <Link
               href="/contact"
@@ -362,7 +387,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents }: HomeCl
             >
               <span className="flex items-center gap-2">
                 <Icon icon="mdi:book-plus" className="w-5 h-5" />
-                Suggest a Book
+                {suggest.buttonText}
               </span>
             </Link>
           </div>

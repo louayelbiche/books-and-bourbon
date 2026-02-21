@@ -181,6 +181,37 @@ async function seed() {
     console.log(`  Event: "${created.title}" → book:${bookSlug} (${created.status})`);
   }
 
+  // Seed default site images in tenant metadata
+  const tenant = await prisma.tenant.findUnique({
+    where: { id: TENANT_ID },
+    select: { metadata: true },
+  });
+  const existingMetadata = tenant?.metadata || {};
+  if (!existingMetadata.siteImages) {
+    await prisma.tenant.update({
+      where: { id: TENANT_ID },
+      data: {
+        metadata: {
+          ...existingMetadata,
+          siteImages: {
+            heroBackground: '',
+            ogImage: '',
+            aboutHeroImage: '',
+            ctaBackground: '',
+            teamPhotos: [
+              { name: 'Jessica Schaefer', role: 'Host', imageUrl: '/images/team/jessica-schaefer.webp', bio: 'Jessica brings her passion for literature and meaningful conversations to every episode of Books and Bourbon.', photoPosition: 'center 25%' },
+              { name: 'Andy Duenas', role: 'Host', imageUrl: '/images/team/andy-duenas.jpg', bio: 'Andy combines his love of storytelling with deep industry expertise to create engaging discussions.', photoPosition: 'center 15%' },
+              { name: 'Patrick Kearns', role: 'Host', imageUrl: '/images/team/patrick-kearns.jpg', bio: 'Patrick contributes his unique perspective and thoughtful analysis to every literary conversation.', photoPosition: 'center 20%' },
+            ],
+          },
+        },
+      },
+    });
+    console.log('\n  Seeded siteImages in tenant metadata');
+  } else {
+    console.log('\n  siteImages already present in tenant metadata — skipped');
+  }
+
   console.log('\nDone! 5 books + 5 events seeded.');
 }
 

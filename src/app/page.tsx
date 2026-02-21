@@ -1,4 +1,4 @@
-import { fetchEvents, type CMSEvent } from '@/lib/cms'
+import { fetchEvents, fetchSiteImages, fetchPageContent, type CMSEvent } from '@/lib/cms'
 import { fallbackEvents } from './events/fallback'
 import { HomeClient } from './HomeClient'
 
@@ -81,7 +81,11 @@ const fallbackUpcomingEvents: CMSEvent[] = [
 export const revalidate = 3600
 
 export default async function HomePage() {
-  const cmsEvents = await fetchEvents({ limit: 20 })
+  const [cmsEvents, siteImages, pageContent] = await Promise.all([
+    fetchEvents({ limit: 20 }),
+    fetchSiteImages(),
+    fetchPageContent(),
+  ])
   const allEvents = cmsEvents.length > 0 ? cmsEvents : fallbackEvents
 
   const today = new Date().toISOString().split('T')[0]
@@ -100,5 +104,7 @@ export default async function HomePage() {
     .filter((e) => e.id !== featuredEvent.id)
     .slice(0, 3)
 
-  return <HomeClient featuredEvent={featuredEvent} upcomingEvents={upcomingEvents} pastEvents={pastEvents} />
+  const heroBackground = siteImages.heroBackground || '/images/hero-bg.png'
+
+  return <HomeClient featuredEvent={featuredEvent} upcomingEvents={upcomingEvents} pastEvents={pastEvents} heroBackground={heroBackground} homeContent={pageContent.home} />
 }

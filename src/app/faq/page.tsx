@@ -1,4 +1,4 @@
-import { fetchFAQs, CMSFAQ } from '@/lib/cms'
+import { fetchFAQs, fetchPageContent, DEFAULT_PAGE_CONTENT, CMSFAQ } from '@/lib/cms'
 import { FAQClient } from './FAQClient'
 
 export const revalidate = 3600
@@ -49,8 +49,12 @@ const fallbackFAQs: CMSFAQ[] = [
 ]
 
 export default async function FAQPage() {
-  const cmsFAQs = await fetchFAQs()
+  const [cmsFAQs, pageContent] = await Promise.all([
+    fetchFAQs(),
+    fetchPageContent(),
+  ])
   const faqs: CMSFAQ[] = cmsFAQs.length > 0 ? cmsFAQs : fallbackFAQs
+  const faqContent = pageContent.faq || DEFAULT_PAGE_CONTENT.faq
 
-  return <FAQClient faqs={faqs} />
+  return <FAQClient faqs={faqs} header={faqContent.header} cta={faqContent.cta} />
 }

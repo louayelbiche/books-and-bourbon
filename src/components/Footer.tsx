@@ -101,9 +101,9 @@ export function Footer() {
 
           {/* Explore Links */}
           <div>
-            <h4 className="font-display text-brand-cream font-semibold mb-4">
+            <h3 className="font-display text-brand-cream font-semibold text-base mb-4">
               Explore
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {footerLinks.explore.map((link) => (
                 <li key={link.label}>
@@ -120,9 +120,9 @@ export function Footer() {
 
           {/* Company Links */}
           <div>
-            <h4 className="font-display text-brand-cream font-semibold mb-4">
+            <h3 className="font-display text-brand-cream font-semibold text-base mb-4">
               Company
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
@@ -139,9 +139,9 @@ export function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-display text-brand-cream font-semibold mb-4">
+            <h3 className="font-display text-brand-cream font-semibold text-base mb-4">
               Stay Updated
-            </h4>
+            </h3>
             <p className="text-brand-tan text-sm mb-4">
               Get notified about new episodes and author announcements.
             </p>
@@ -178,7 +178,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-text-muted/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-text-muted text-sm">
+          <p className="text-text-secondary text-sm" suppressHydrationWarning>
             &copy; {new Date().getFullYear()} Books and Bourbon. All rights reserved.
           </p>
           <ul className="flex gap-6">
@@ -186,7 +186,7 @@ export function Footer() {
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="text-text-muted text-sm hover:text-text-secondary transition-colors"
+                  className="text-text-secondary text-sm hover:text-brand-cream transition-colors"
                 >
                   {link.label}
                 </Link>
