@@ -15,7 +15,7 @@
     "@runwell/agent-core": "file:../runwell-bib/packages/agent-core",
     "@runwell/bib-concierge": "file:../runwell-bib/packages/bib-concierge",
     "@runwell/capitalv-brand-kit": "file:../capitalv-brand-kit",
-    "@runwell/cms-snapshot": "file:../runwell-bib/packages/cms-snapshot",
+    "@runwell/cms-snapshot": "file:./local-packages/cms-snapshot",
     "@runwell/concierge-shared": "file:../runwell-bib/packages/concierge-shared",
     "@runwell/i18n": "file:../runwell-bib/packages/i18n",
     "lucide-react": "^0.469.0",

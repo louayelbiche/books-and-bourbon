@@ -9,7 +9,7 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { createHmac, timingSafeEqual } from 'crypto';
-import { fetchEvents, fetchBooks, fetchFAQs } from '@/lib/cms';
+import { fetchEvents, fetchBooks, fetchFAQs, fetchSiteImages } from '@/lib/cms';
 
 // Optional — only present when concierge bot is deployed
 let invalidateKnowledge: (() => void) | undefined;
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
   revalidatePath('/', 'layout');
 
   // Pre-warm snapshots (fire-and-forget)
-  void Promise.all([fetchEvents(), fetchBooks(), fetchFAQs()]).catch(() => {});
+  void Promise.all([fetchEvents(), fetchBooks(), fetchFAQs(), fetchSiteImages()]).catch(() => {});
 
   return NextResponse.json({ success: true, message: 'Content synced' });
 }
