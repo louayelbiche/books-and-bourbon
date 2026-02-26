@@ -10,7 +10,7 @@ import type { ClientSessionData } from '@/lib/chat/session-store';
 
 const handler = createChatHandler({
   sessionStore,
-  createAgent: (session) => {
+  createAgent: (session: unknown) => {
     const s = session as ClientSessionData;
     return new BBConciergeAgent(s.knowledge);
   },

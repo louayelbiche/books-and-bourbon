@@ -1,9 +1,7 @@
-import { NextResponse } from 'next/server'
+import { createHealthCheck } from '@runwell/health'
 
-export async function GET() {
-  return NextResponse.json({
-    status: 'ok',
-    service: 'books-and-bourbon',
-    timestamp: new Date().toISOString(),
-  })
-}
+export const GET = createHealthCheck({
+  projectName: 'books-and-bourbon',
+  version: process.env.npm_package_version || '0.1.0',
+  checks: [],
+})

@@ -14,6 +14,9 @@
 import { fetchEvents, fetchBooks, fetchFAQs } from '@/lib/cms';
 import type { CMSEvent, CMSBook, CMSFAQ } from '@/lib/cms';
 import { saveSnapshot, loadSnapshot } from '@runwell/cms-snapshot';
+import { createLogger, logError } from '@runwell/logger';
+
+const logger = createLogger('knowledge');
 
 // ── Cache ──────────────────────────────────────────────────────────
 
@@ -52,7 +55,7 @@ async function fetchAndCache(): Promise<string> {
     }
     return text;
   } catch (error) {
-    console.error('[knowledge] CMS fetch failed:', error);
+    logger.error('CMS fetch failed', logError(error));
     // Return stale cache if available, then filesystem snapshot, then fallback
     if (cachedKnowledge) return cachedKnowledge.text;
     return loadSnapshot<string>('knowledge') ?? CMS_EMPTY_FALLBACK;
@@ -65,7 +68,7 @@ async function fetchAndCache(): Promise<string> {
  */
 export function invalidateKnowledge(): void {
   cachedKnowledge = null;
-  console.log('[knowledge] Cache invalidated');
+  logger.info('Cache invalidated');
 }
 
 // ── CMS → Knowledge String ────────────────────────────────────────

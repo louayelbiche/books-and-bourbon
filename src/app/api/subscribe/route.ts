@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createLogger, logError } from '@runwell/logger';
+
+const logger = createLogger('subscribe');
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,7 +11,7 @@ export async function POST(request: NextRequest) {
     const cmsKey = process.env.CMS_API_KEY;
 
     if (!cmsUrl || !cmsKey) {
-      console.error('Missing CMS_API_URL or CMS_API_KEY env vars');
+      logger.error('Missing CMS_API_URL or CMS_API_KEY env vars');
       return NextResponse.json(
         { error: 'Newsletter service is not configured.' },
         { status: 503 }
@@ -20,6 +23,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': cmsKey,
+        'x-request-id': crypto.randomUUID(),
       },
       body: JSON.stringify({
         email: body.email,
@@ -38,7 +42,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Subscribe error:', error);
+    logger.error('Subscribe failed', logError(error));
     return NextResponse.json(
       { error: 'Something went wrong. Please try again.' },
       { status: 500 }

@@ -7,10 +7,12 @@
 
 import { NextResponse } from 'next/server';
 import { createSessionHandler } from '@runwell/concierge-shared/api';
-import { redactError } from '@runwell/concierge-shared/env';
+import { createLogger, logError } from '@runwell/logger';
 import { sessionStore } from '@/lib/chat/session-store';
 import { getKnowledge } from '@/lib/chat/knowledge';
 import type { ClientSessionData } from '@/lib/chat/session-store';
+
+const logger = createLogger('session');
 
 // Factory handles GET, DELETE, HEAD
 const handler = createSessionHandler({
@@ -40,7 +42,7 @@ export async function POST() {
     const session = sessionStore.create(knowledge);
     return NextResponse.json({ sessionId: session.id });
   } catch (error) {
-    console.error('[session] Failed to create session:', redactError(error));
+    logger.error('Failed to create session', logError(error));
     return NextResponse.json(
       { error: 'Failed to create session' },
       { status: 500 }

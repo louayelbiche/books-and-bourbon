@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-02-24T03:18:05Z",
+  "generatedBy": "vendor.sh",
+  "monorepoRoot": "/Users/balencia/Documents/Code/runwell-bib",
+  "monorepoCommit": "a722b665189d0acae88bd9f8f0ff34c9712d3c7f",
+  "monorepoRef": "feat/webstudio-domain-migration",
+  "targetProject": "/Users/balencia/Documents/Code/books-and-bourbon",
+  "packageCount": 1,
+  "packages": [
+    {
+      "name": "@runwell/health",
+      "directory": "health",
+      "sourceVersion": "1.0.0",
+      "sourceCommit": "",
+      "vendoredAt": "2026-02-24T03:18:05Z",
+      "exportPaths": [
+        ".",
+        "./types"
+      ],
+      "files": [
+        "dist/checks.d.ts",
+        "dist/checks.d.ts.map",
+        "dist/checks.js",
+        "dist/checks.js.map",
+        "dist/index.d.ts",
+        "dist/index.d.ts.map",
+        "dist/index.js",
+        "dist/index.js.map",
+        "dist/types.d.ts",
+        "dist/types.d.ts.map",
+        "dist/types.js",
+        "dist/types.js.map",
+        "package.json"
+      ],
+      "fileCount": 13
+    }
+  ]
+}

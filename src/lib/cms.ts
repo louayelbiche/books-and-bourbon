@@ -1,4 +1,7 @@
 import { snapshotFirst } from '@runwell/cms-snapshot';
+import { createLogger, logError } from '@runwell/logger';
+
+const logger = createLogger('cms');
 
 const CMS_API_URL = process.env.CMS_API_URL || '';
 const CMS_API_KEY = process.env.CMS_API_KEY || '';
@@ -24,13 +27,13 @@ async function cmsGet<T>(path: string, options: FetchOptions = {}): Promise<T | 
     clearTimeout(timeout);
 
     if (!response.ok) {
-      console.error(`CMS API error: ${response.status} for ${path}`);
+      logger.error('CMS API error', { status: response.status, path });
       return null;
     }
 
     return await response.json();
   } catch (error) {
-    console.error(`CMS fetch failed for ${path}:`, error);
+    logger.error('CMS fetch failed', { path, ...logError(error) });
     return null;
   }
 }

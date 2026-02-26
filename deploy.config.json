@@ -1,0 +1,58 @@
+{
+  "project": "books-and-bourbon",
+  "vps": {
+    "host": "72.62.121.234",
+    "user": "root",
+    "key": "~/.ssh/runwell_vps",
+    "path": "/opt/books-and-bourbon",
+    "stagingPath": "/opt/books-and-bourbon-staging"
+  },
+  "ports": {
+    "production": 9201,
+    "staging": 9202
+  },
+  "processManager": "pm2",
+  "pm2Config": {
+    "production": {
+      "name": "books-and-bourbon",
+      "script": "npm",
+      "args": "start",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "staging": {
+      "name": "books-and-bourbon-staging",
+      "script": "npm",
+      "args": "start",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  },
+  "workspacePackages": [
+    "@runwell/agent-core",
+    "@runwell/bib-concierge",
+    "@runwell/cms-snapshot",
+    "@runwell/concierge-shared",
+    "@runwell/core",
+    "@runwell/error-handling",
+    "@runwell/i18n",
+    "@runwell/logger"
+  ],
+  "vendoredPackages": [],
+  "rsync": {
+    "checksumDirs": ["src/", "app/"],
+    "include": ["src/", "app/", "public/", "next.config.ts", "package.json", "tsconfig.json", "package-lock.json"],
+    "exclude": [".next", ".turbo", "node_modules", "tsconfig.tsbuildinfo", ".git", "*.tgz"]
+  },
+  "healthCheck": {
+    "production": "https://books.runwellsystems.com/api/health",
+    "staging": "http://72.62.121.234:9202/api/health"
+  },
+  "build": {
+    "command": "npm run build",
+    "preBuild": "rm -rf .next"
+  },
+  "notes": "PM2-managed Next.js app. CLIENT PROJECT — production locked. Requires explicit approval for any production deployments."
+}
