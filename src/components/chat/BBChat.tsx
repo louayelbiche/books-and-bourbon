@@ -2,11 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { ChatWidget } from '@runwell/concierge-shared/chat-widget';
-import type { ChatWidgetTheme } from '@runwell/concierge-shared/config';
 
 const SESSION_KEY = 'bb-chat-session';
 
-const bbTheme: ChatWidgetTheme = {
+const bbTheme = {
   fab: { bg: '#3B0F11', hover: '#5c1a1e', icon: '#f5e6d4' },
   panel: { bg: '#0a0a0a', border: '#2a2a2a', width: '380px', height: '520px' },
   header: { bg: '#3B0F11', text: '#f5e6d4', subtext: '#c6c0ab' },
