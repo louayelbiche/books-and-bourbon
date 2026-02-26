@@ -58,7 +58,7 @@ export default async function AboutPage() {
       <section className="pt-32 pb-24 bg-brand-black relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-radial from-brand-burgundy/10 via-transparent to-transparent" />
         <div className="max-w-7xl mx-auto px-6 relative">
-          <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
+          <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
             {heroContent.eyebrow}
           </p>
           <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-brand-cream mb-6 max-w-4xl">
@@ -127,7 +127,7 @@ export default async function AboutPage() {
       <section className="py-24 bg-brand-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
+            <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
               {teamHeadings.eyebrow}
             </p>
             <h2 className="font-display text-4xl md:text-5xl text-brand-cream">
@@ -166,7 +166,7 @@ export default async function AboutPage() {
       <section className="py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
+            <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
               {values.eyebrow}
             </p>
             <h2 className="font-display text-4xl md:text-5xl text-brand-cream">

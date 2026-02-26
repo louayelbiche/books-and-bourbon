@@ -44,7 +44,7 @@ export default function BooksClient({ books }: BooksClientProps) {
                       </div>
                     )}
                     {book.isFeatured && (
-                      <div className="absolute top-3 left-3 bg-brand-gold px-2 py-1 text-xs font-medium text-brand-black">
+                      <div className="absolute top-3 left-3 bg-brand-gold px-2 py-1 text-xs font-mono font-medium text-brand-black">
                         Featured
                       </div>
                     )}
@@ -53,7 +53,7 @@ export default function BooksClient({ books }: BooksClientProps) {
                     </div>
                   </div>
                   {book.genre && (
-                    <span className="text-brand-burgundy text-xs font-medium tracking-wider uppercase">
+                    <span className="font-mono text-brand-burgundy text-xs font-medium tracking-[0.15em] uppercase">
                       {book.genre}
                     </span>
                   )}
@@ -111,7 +111,7 @@ export default function BooksClient({ books }: BooksClientProps) {
               {/* Book Info */}
               <div className="flex-1">
                 {selectedBook.genre && (
-                  <span className="text-brand-burgundy text-sm font-medium tracking-wider uppercase">
+                  <span className="font-mono text-brand-burgundy text-sm font-medium tracking-[0.15em] uppercase">
                     {selectedBook.genre}
                   </span>
                 )}

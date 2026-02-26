@@ -45,7 +45,7 @@ export function EventsClient({ events, today, header }: { events: CMSEvent[]; to
       {/* Header */}
       <section className="pt-32 pb-16 bg-brand-black">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
+          <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
             {header?.eyebrow || 'Watch & Listen'}
           </p>
           <h1 className="font-display text-5xl md:text-6xl text-brand-cream mb-6">
@@ -103,7 +103,7 @@ export function EventsClient({ events, today, header }: { events: CMSEvent[]; to
                   {showDivider && (
                     <div className="flex items-center gap-4 my-8">
                       <div className="h-px flex-1 bg-text-muted/20" />
-                      <span className="text-text-secondary text-sm font-medium uppercase tracking-wider whitespace-nowrap">Past Reads</span>
+                      <span className="font-mono text-text-secondary text-sm font-medium uppercase tracking-[0.15em] whitespace-nowrap">Past Reads</span>
                       <div className="h-px flex-1 bg-text-muted/20" />
                     </div>
                   )}
@@ -134,13 +134,13 @@ export function EventsClient({ events, today, header }: { events: CMSEvent[]; to
                           </div>
                         </div>
                       ) : !past && event.status !== 'recorded' ? (
-                        <div className="absolute top-4 right-4 bg-brand-gold px-3 py-1 text-sm font-medium text-brand-black">
+                        <div className="absolute top-4 right-4 bg-brand-gold px-3 py-1 text-sm font-mono font-medium text-brand-black">
                           Coming Soon
                         </div>
                       ) : null}
 
                       {event.duration && (
-                        <div className="absolute bottom-3 right-3 bg-brand-black/80 px-2 py-1 text-xs text-brand-cream">
+                        <div className="absolute bottom-3 right-3 bg-brand-black/80 px-2 py-1 text-xs font-mono text-brand-cream">
                           {event.duration}
                         </div>
                       )}

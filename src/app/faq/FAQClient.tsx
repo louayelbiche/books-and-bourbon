@@ -55,7 +55,7 @@ export function FAQClient({ faqs, header, cta }: FAQClientProps) {
       {/* Header */}
       <section className="pt-32 pb-16 bg-brand-black">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
+          <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
             {header?.eyebrow || 'Help Center'}
           </p>
           <h1 className="font-display text-5xl md:text-6xl text-brand-cream mb-6">

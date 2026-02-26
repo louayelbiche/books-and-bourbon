@@ -95,10 +95,10 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-          <p className="text-brand-burgundy-light font-medium tracking-[0.3em] uppercase text-sm mb-6 animate-fade-in">
+          <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-6 animate-fade-in">
             {hero.eyebrow}
           </p>
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-semibold text-brand-cream mb-6 animate-slide-up">
+          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-light text-brand-cream mb-6 animate-slide-up">
             Books and <span className="text-gradient">Bourbon</span>
             <span className="flex items-center justify-center gap-3 text-2xl md:text-3xl lg:text-4xl mt-4 font-normal">
               (hosted by
@@ -175,7 +175,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
                       <Icon icon="mdi:play" className="w-10 h-10 text-brand-cream ml-1" />
                     </div>
                   </div>
-                  <div className="absolute top-4 left-4 bg-brand-burgundy px-3 py-1 text-sm font-medium text-brand-cream">
+                  <div className="absolute top-4 left-4 bg-brand-burgundy px-3 py-1 text-sm font-mono font-medium text-brand-cream">
                     Latest Episode
                   </div>
                 </div>
@@ -184,7 +184,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
 
             {/* Episode Info */}
             <div className="w-full lg:w-1/3">
-              <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
+              <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
                 Featured
               </p>
               <Link href={`/events/${featuredEvent.slug}`} className="hover:text-brand-gold transition-colors">
@@ -223,7 +223,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
         <section className="py-24 md:py-32 bg-surface">
           <div className="max-w-7xl mx-auto px-6">
             <div ref={addToRefs} className="reveal text-center mb-16">
-              <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
+              <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
                 Coming Soon
               </p>
               <h2 className="font-display text-4xl md:text-5xl text-brand-cream">
@@ -251,7 +251,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
                       <div className="w-full h-full bg-surface" />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 to-transparent" />
-                    <div className="absolute top-4 right-4 bg-brand-gold px-3 py-1 text-sm font-medium text-brand-black">
+                    <div className="absolute top-4 right-4 bg-brand-gold px-3 py-1 text-sm font-mono font-medium text-brand-black">
                       Coming Soon
                     </div>
                   </div>
@@ -291,7 +291,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
         <section className="py-24 md:py-32 bg-brand-black">
           <div className="max-w-7xl mx-auto px-6">
             <div ref={addToRefs} className="reveal text-center mb-16">
-              <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
+              <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
                 Previously On
               </p>
               <h2 className="font-display text-4xl md:text-5xl text-brand-cream">
@@ -327,7 +327,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
                       </div>
                     )}
                     {event.duration && (
-                      <div className="absolute bottom-3 right-3 bg-brand-black/80 px-2 py-1 text-xs text-brand-cream">
+                      <div className="absolute bottom-3 right-3 bg-brand-black/80 px-2 py-1 text-xs font-mono text-brand-cream">
                         {event.duration}
                       </div>
                     )}
@@ -372,7 +372,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
       <section className="py-24 md:py-32 bg-surface">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <div ref={addToRefs} className="reveal">
-            <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-sm mb-4">
+            <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
               {suggest.eyebrow}
             </p>
             <h2 className="font-display text-4xl md:text-5xl text-brand-cream mb-6">

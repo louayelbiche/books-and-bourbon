@@ -123,7 +123,7 @@ export function EventDetail({ event }: { event: CMSEvent }) {
                 />
               )}
               <div>
-                <p className="text-brand-burgundy-light font-medium tracking-wider uppercase text-xs mb-2">
+                <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-xs mb-2">
                   Featured Book
                 </p>
                 <p className="font-display text-xl text-brand-cream mb-1">

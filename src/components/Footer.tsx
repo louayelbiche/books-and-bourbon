@@ -74,7 +74,7 @@ export function Footer() {
               <div className="w-10 h-10 bg-brand-burgundy flex items-center justify-center">
                 <Icon icon="mdi:book-open-page-variant" className="w-6 h-6 text-brand-cream" />
               </div>
-              <span className="font-display text-xl font-semibold text-brand-cream">
+              <span className="font-display text-xl font-medium text-brand-cream">
                 Books & Bourbon
               </span>
             </Link>
@@ -101,7 +101,7 @@ export function Footer() {
 
           {/* Explore Links */}
           <div>
-            <h3 className="font-display text-brand-cream font-semibold text-base mb-4">
+            <h3 className="font-display text-brand-cream font-medium text-base mb-4">
               Explore
             </h3>
             <ul className="space-y-3">
@@ -120,7 +120,7 @@ export function Footer() {
 
           {/* Company Links */}
           <div>
-            <h3 className="font-display text-brand-cream font-semibold text-base mb-4">
+            <h3 className="font-display text-brand-cream font-medium text-base mb-4">
               Company
             </h3>
             <ul className="space-y-3">
@@ -139,7 +139,7 @@ export function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h3 className="font-display text-brand-cream font-semibold text-base mb-4">
+            <h3 className="font-display text-brand-cream font-medium text-base mb-4">
               Stay Updated
             </h3>
             <p className="text-brand-tan text-sm mb-4">

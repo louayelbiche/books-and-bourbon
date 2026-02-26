@@ -35,7 +35,7 @@ export function Navigation() {
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="group">
-          <span className="font-display text-xl font-semibold text-brand-cream group-hover:text-brand-gold transition-colors">
+          <span className="font-display text-xl font-medium text-brand-cream group-hover:text-brand-gold transition-colors">
             Books & Bourbon
           </span>
         </Link>

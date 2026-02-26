@@ -14,6 +14,7 @@ const config: Config = {
       // Override display font for elevated typography
       fontFamily: {
         display: ['Cormorant Garamond', 'Georgia', 'serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       // Site-specific extensions (brand kit provides base colors)
       colors: {
