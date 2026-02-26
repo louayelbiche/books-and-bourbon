@@ -17,7 +17,7 @@ const logger = createLogger('session');
 // Factory handles GET, DELETE, HEAD
 const handler = createSessionHandler({
   sessionStore,
-  serialize: (raw) => {
+  serialize: (raw: unknown) => {
     const session = raw as unknown as ClientSessionData;
     return {
       sessionId: session.id,
