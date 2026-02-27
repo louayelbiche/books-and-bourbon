@@ -5,8 +5,8 @@ import { Footer } from '@/components/Footer'
 import { BBChat } from '@/components/chat/BBChat'
 import { fetchSiteImages } from '@/lib/cms'
 
-const BASE_URL = 'https://books.runwellsystems.com'
-const DEFAULT_OG_IMAGE = 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&h=630&fit=crop&q=80'
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://books.runwellsystems.com'
+const DEFAULT_OG_IMAGE = '/og-image.png'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -20,20 +20,27 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(BASE_URL),
-    title: 'Books and Bourbon | Literary Conversations',
+    title: 'Books & Bourbon (hosted by Capital V) | Literary Conversations',
     description: 'An author-led series featuring moderated conversations on literature, ideas, and craft. Watch recorded conversations, discover books, and join our literary community.',
     keywords: 'books, bourbon, author talks, literary events, book discussions, author interviews',
+    icons: {
+      icon: [
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+        { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      ],
+      apple: '/apple-touch-icon.png',
+    },
     openGraph: {
-      title: 'Books and Bourbon | Literary Conversations',
+      title: 'Books & Bourbon (hosted by Capital V) | Literary Conversations',
       description: 'Where great books meet great conversations',
       type: 'website',
       url: BASE_URL,
-      siteName: 'Books and Bourbon',
-      images: [{ url: ogImage, width: 1200, height: 630, alt: 'Books and Bourbon — Literary Conversations' }],
+      siteName: 'Books & Bourbon',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: 'Books & Bourbon — Literary Conversations' }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Books and Bourbon | Literary Conversations',
+      title: 'Books & Bourbon (hosted by Capital V) | Literary Conversations',
       description: 'Where great books meet great conversations',
       images: [ogImage],
     },
