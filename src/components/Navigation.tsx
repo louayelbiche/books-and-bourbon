@@ -58,7 +58,7 @@ export function Navigation() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 text-brand-cream"
+          className="md:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-brand-cream"
           aria-label="Toggle menu"
         >
           <Icon
@@ -70,7 +70,7 @@ export function Navigation() {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed inset-0 top-[72px] bg-brand-black/98 backdrop-blur-lg transition-all duration-500 ${
+        className={`md:hidden fixed inset-0 top-0 pt-[72px] bg-brand-black/98 backdrop-blur-lg transition-all duration-500 ${
           isMobileMenuOpen
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
@@ -82,7 +82,7 @@ export function Navigation() {
               <Link
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="font-display text-2xl text-brand-cream hover:text-brand-gold transition-colors"
+                className="font-display text-2xl text-brand-cream hover:text-brand-gold transition-colors min-h-[44px] py-3 inline-flex items-center"
               >
                 {link.label}
               </Link>

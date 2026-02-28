@@ -94,11 +94,11 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-6 animate-fade-in">
             {hero.eyebrow}
           </p>
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-light text-brand-cream mb-6 animate-slide-up">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-brand-cream mb-6 animate-slide-up">
             Books and <span className="text-gradient">Bourbon</span>
             <span className="flex items-center justify-center gap-3 text-2xl md:text-3xl lg:text-4xl mt-4 font-normal">
               (hosted by
@@ -149,7 +149,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
       </section>
 
       {/* Featured Episode Section */}
-      <section id="featured" className="py-24 md:py-32 bg-brand-black">
+      <section id="featured" className="py-16 sm:py-20 md:py-28 lg:py-32 bg-brand-black">
         <div className="max-w-7xl mx-auto px-6">
           <div
             ref={addToRefs}
@@ -188,7 +188,7 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
                 Featured
               </p>
               <Link href={`/events/${featuredEvent.slug}`} className="hover:text-brand-gold transition-colors">
-                <h2 className="font-display text-3xl md:text-4xl text-brand-cream mb-4">
+                <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-brand-cream mb-4">
                   {featuredEvent.title}
                 </h2>
               </Link>
@@ -220,18 +220,18 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
 
       {/* Upcoming Events */}
       {upcomingEvents.length > 0 && (
-        <section className="py-24 md:py-32 bg-surface">
-          <div className="max-w-7xl mx-auto px-6">
+        <section className="py-16 sm:py-20 md:py-28 lg:py-32 bg-surface">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div ref={addToRefs} className="reveal text-center mb-16">
               <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
                 Coming Soon
               </p>
-              <h2 className="font-display text-4xl md:text-5xl text-brand-cream">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-brand-cream">
                 Upcoming Episodes
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
               {upcomingEvents.map((event, index) => (
                 <Link
                   key={event.id}
@@ -288,18 +288,18 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
 
       {/* Past Reads */}
       {pastEvents.length > 0 && (
-        <section className="py-24 md:py-32 bg-brand-black">
-          <div className="max-w-7xl mx-auto px-6">
+        <section className="py-16 sm:py-20 md:py-28 lg:py-32 bg-brand-black">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div ref={addToRefs} className="reveal text-center mb-16">
               <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
                 Previously On
               </p>
-              <h2 className="font-display text-4xl md:text-5xl text-brand-cream">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-brand-cream">
                 Past Reads
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
               {pastEvents.map((event, index) => (
                 <Link
                   key={event.id}
@@ -369,13 +369,13 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
       )}
 
       {/* Suggest a Book */}
-      <section className="py-24 md:py-32 bg-surface">
-        <div className="max-w-5xl mx-auto px-6 text-center">
+      <section className="py-16 sm:py-20 md:py-28 lg:py-32 bg-surface">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <div ref={addToRefs} className="reveal">
             <p className="font-mono text-brand-burgundy-light font-medium tracking-[0.15em] uppercase text-sm mb-4">
               {suggest.eyebrow}
             </p>
-            <h2 className="font-display text-4xl md:text-5xl text-brand-cream mb-6">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-brand-cream mb-6">
               {suggest.title}
             </h2>
             <p className="text-text-secondary text-lg mb-10 max-w-xl mx-auto whitespace-pre-line">

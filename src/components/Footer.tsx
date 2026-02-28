@@ -159,7 +159,7 @@ export function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={isSubmitting}
-                  className="form-input text-sm"
+                  className="form-input"
                 />
                 <button
                   type="submit"
