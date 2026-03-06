@@ -32,6 +32,9 @@ yarn-error.log*
 # cms snapshots (self-seeds on first successful fetch)
 /cms-snapshots
 
+# user-uploaded media (synced via iCloud, not git)
+/public/uploads
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
