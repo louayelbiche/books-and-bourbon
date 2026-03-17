@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { ChatWidget } from '@runwell/concierge-shared/chat-widget';
 
 const SESSION_KEY = 'bb-chat-session';
+const VISITOR_KEY = 'bb-visitor-id';
 
 const bbTheme = {
   fab: { bg: '#3B0F11', hover: '#5c1a1e', icon: '#f5e6d4' },
@@ -20,6 +21,7 @@ const bbTheme = {
 
 export function BBChat() {
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const [visitorId, setVisitorId] = useState<string | null>(null);
 
   const createSession = useCallback(async () => {
     try {
@@ -28,6 +30,13 @@ export function BBChat() {
       const data = await res.json();
       const id = data.sessionId as string;
       localStorage.setItem(SESSION_KEY, id);
+
+      // Store visitor ID if returned by bot-memory
+      if (data.visitorId) {
+        setVisitorId(data.visitorId);
+        localStorage.setItem(VISITOR_KEY, data.visitorId);
+      }
+
       return id;
     } catch {
       return null;
@@ -47,6 +56,12 @@ export function BBChat() {
     let cancelled = false;
 
     async function init() {
+      // Restore visitor ID
+      const storedVisitor = localStorage.getItem(VISITOR_KEY);
+      if (storedVisitor) {
+        setVisitorId(storedVisitor);
+      }
+
       // Try to restore existing session
       const stored = localStorage.getItem(SESSION_KEY);
       if (stored) {
@@ -55,8 +70,10 @@ export function BBChat() {
           setSessionId(stored);
           return;
         }
-        // Clear stale ID so we don't retry it on next page load
+        // Clear stale IDs so we don't retry on next page load
         localStorage.removeItem(SESSION_KEY);
+        localStorage.removeItem(VISITOR_KEY);
+        setVisitorId(null);
       }
 
       // Create new session
@@ -77,10 +94,12 @@ export function BBChat() {
   return (
     <ChatWidget
       sessionId={sessionId}
+      visitorId={visitorId ?? undefined}
       businessName="Books & Bourbon"
       theme={bbTheme}
       chatApiPath="/api/chat/"
       sessionApiPath="/api/chat/session/"
+      summarizeApiPath="/api/chat/summarize/"
       assistantLabel="Books & Bourbon"
       poweredByLabel=""
       poweredByFooter={false}

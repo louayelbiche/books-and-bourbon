@@ -12,6 +12,7 @@
     "@google/generative-ai": "^0.21.0",
     "@iconify/react": "^5.0.1",
     "@runwell/agent-core": "file:../runwell-bib/packages/agent-core",
+    "@runwell/bot-memory": "file:../runwell-bib/packages/bot-memory",
     "@runwell/bib-concierge": "file:../runwell-bib/packages/bib-concierge",
     "@runwell/capitalv-brand-kit": "file:../capitalv-brand-kit",
     "@runwell/cms-snapshot": "file:./local-packages/cms-snapshot",
@@ -20,6 +21,7 @@
     "@runwell/health": "file:.vendor/health",
     "@runwell/logger": "file:../runwell-bib/packages/logger",
     "@runwell/i18n": "file:../runwell-bib/packages/i18n",
+    "pg": "^8.13.0",
     "lucide-react": "^0.469.0",
     "next": "^14.2.0",
     "react": "^18.2.0",
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
+    "@types/pg": "^8.11.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "autoprefixer": "^10.4.17",
