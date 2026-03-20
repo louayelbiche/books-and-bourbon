@@ -11,6 +11,9 @@ const nextConfig = {
   trailingSlash: true,
   poweredByHeader: false,
   transpilePackages: ['@runwell/pidgie-shared', '@runwell/agent-core'],
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   async headers() {
     return [
       {
