@@ -5,7 +5,7 @@
  * persistence, profile injection, and visitor tracking.
  */
 
-import { createChatHandler, parseStructuredResponse } from '@runwell/concierge-shared/api';
+import { createChatHandler, parseStructuredResponse } from '@runwell/pidgie-shared/api';
 import type { ConversationPersistence } from '@runwell/bot-memory';
 import { sessionStore } from '@/lib/chat/session-store';
 import { BBConciergeAgent } from '@/lib/chat/bb-agent';

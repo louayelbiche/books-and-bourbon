@@ -32,9 +32,9 @@
   },
   "workspacePackages": [
     "@runwell/agent-core",
-    "@runwell/bib-concierge",
+    "@runwell/pidgie-core",
     "@runwell/cms-snapshot",
-    "@runwell/concierge-shared",
+    "@runwell/pidgie-shared",
     "@runwell/core",
     "@runwell/error-handling",
     "@runwell/i18n",

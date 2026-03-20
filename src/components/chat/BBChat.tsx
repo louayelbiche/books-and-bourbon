@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { ChatWidget } from '@runwell/concierge-shared/chat-widget';
+import { ChatWidget } from '@runwell/pidgie-shared/chat-widget';
 
 const SESSION_KEY = 'bb-chat-session';
 const VISITOR_KEY = 'bb-visitor-id';

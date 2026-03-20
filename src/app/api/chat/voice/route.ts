@@ -3,7 +3,7 @@
  * Uses createVoiceHandler factory from concierge-shared.
  */
 
-import { createVoiceHandler } from '@runwell/concierge-shared/api';
+import { createVoiceHandler } from '@runwell/pidgie-shared/api';
 import { sessionStore } from '@/lib/chat/session-store';
 
 export const POST = createVoiceHandler({

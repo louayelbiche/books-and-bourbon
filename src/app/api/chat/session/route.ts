@@ -6,7 +6,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { createSessionHandler } from '@runwell/concierge-shared/api';
+import { createSessionHandler } from '@runwell/pidgie-shared/api';
 import { createLogger, logError } from '@runwell/logger';
 import { sessionStore } from '@/lib/chat/session-store';
 import { getKnowledge } from '@/lib/chat/knowledge';

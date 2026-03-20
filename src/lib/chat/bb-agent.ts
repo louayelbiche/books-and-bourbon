@@ -6,8 +6,8 @@
  * the system prompt.
  */
 
-import { BaseDemoAgent } from '@runwell/concierge-shared/agent';
-import { buildCardPromptFragment } from '@runwell/bib-concierge/suggestions';
+import { BaseDemoAgent } from '@runwell/pidgie-shared/agent';
+import { buildCardPromptFragment } from '@runwell/pidgie-core/suggestions';
 
 export class BBConciergeAgent extends BaseDemoAgent {
   private knowledge: string;

@@ -10,7 +10,7 @@ const nextConfig = {
   },
   trailingSlash: true,
   poweredByHeader: false,
-  transpilePackages: ['@runwell/concierge-shared', '@runwell/agent-core'],
+  transpilePackages: ['@runwell/pidgie-shared', '@runwell/agent-core'],
   async headers() {
     return [
       {
