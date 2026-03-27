@@ -1,53 +1,83 @@
 /**
- * SSE chat endpoint for the concierge bot.
- * Uses createChatHandler factory from concierge-shared.
- * Bot-memory integration: lazy-initialized Postgres pool for conversation
- * persistence, profile injection, and visitor tracking.
+ * SSE chat endpoint: proxies to BIB /api/public/chat.
+ * All intelligence runs in The Office (BIB). This route is a thin
+ * adapter that converts BIB's JSON response to SSE for the widget.
  */
 
-import { createChatHandler, parseStructuredResponse } from '@runwell/pidgie-shared/api';
-import type { ConversationPersistence } from '@runwell/bot-memory';
-import { sessionStore } from '@/lib/chat/session-store';
-import { BBConciergeAgent } from '@/lib/chat/bb-agent';
-import { getMemoryStore, getProfileInjector } from '@/lib/chat/memory';
-import type { ClientSessionData } from '@/lib/chat/session-store';
-
-// Lazy-initialized handler with memoryStore support.
-let cachedHandler: ((request: Request) => Promise<Response>) | null = null;
-
-async function getHandler(): Promise<(request: Request) => Promise<Response>> {
-  if (cachedHandler) return cachedHandler;
-
-  const memoryStore: ConversationPersistence | undefined = await getMemoryStore();
-  const profileInjector = await getProfileInjector();
-
-  cachedHandler = createChatHandler({
-    sessionStore,
-    createAgent: (session: unknown) => {
-      const s = session as ClientSessionData;
-      return new BBConciergeAgent(s.knowledge);
-    },
-    parseResponse: parseStructuredResponse,
-    allowedOrigins: ['books.runwellsystems.com'],
-    ...(memoryStore
-      ? {
-          memoryStore,
-          getVisitorId: (req: Request) => req.headers.get('x-visitor-id'),
-          sourceApp: 'books-and-bourbon',
-          ...(profileInjector
-            ? {
-                getProfileBlock: (visitorId: string) =>
-                  profileInjector.getPromptBlock(visitorId).then((b) => b?.promptText ?? null),
-              }
-            : {}),
-        }
-      : {}),
-  });
-
-  return cachedHandler;
-}
+const BIB_URL = process.env.BIB_PUBLIC_CHAT_URL || 'http://host.docker.internal:9200/api/public/chat';
+const TENANT_ID = process.env.BIB_TENANT_ID || 'c7ec4d92-98ad-4ebe-bf4d-062aaf41146f';
+const ALLOWED_ORIGINS = ['books.runwellsystems.com', 'books-staging.runwellsystems.com', 'localhost'];
 
 export async function POST(request: Request): Promise<Response> {
-  const handler = await getHandler();
-  return handler(request);
+  const origin = request.headers.get('origin') || '';
+  const isAllowed = ALLOWED_ORIGINS.some((o) => origin.includes(o));
+
+  const body = await request.json();
+  const { sessionId, message } = body;
+
+  if (!sessionId || !message) {
+    return Response.json({ error: 'sessionId and message are required' }, { status: 400 });
+  }
+
+  try {
+    const bibResponse = await fetch(BIB_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message,
+        sessionId,
+        tenantId: TENANT_ID,
+        channel: 'website',
+        contactName: 'Website Visitor',
+      }),
+    });
+
+    const data = await bibResponse.json();
+    const reply = data.reply || 'I apologize, I could not generate a response.';
+    const suggestions = data.suggestions || [];
+
+    // Wrap as SSE for the chat widget
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      start(controller) {
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'text', content: reply })}\n\n`));
+
+        if (suggestions.length > 0) {
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'suggestions', suggestions })}\n\n`));
+        }
+
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
+        controller.close();
+      },
+    });
+
+    const headers: Record<string, string> = {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    };
+
+    if (isAllowed) {
+      headers['Access-Control-Allow-Origin'] = origin;
+      headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS';
+      headers['Access-Control-Allow-Headers'] = 'Content-Type, x-session-id, x-visitor-id';
+    }
+
+    return new Response(stream, { headers });
+  } catch (error) {
+    console.error('[chat-proxy] BIB error:', error instanceof Error ? error.message : error);
+
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      start(controller) {
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'text', content: 'I apologize, I am temporarily unavailable. Please try again in a moment.' })}\n\n`));
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
+        controller.close();
+      },
+    });
+
+    return new Response(stream, {
+      headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' },
+    });
+  }
 }
