@@ -47,7 +47,10 @@ export function ContactClient({ contactContent }: ContactClientProps) {
     setSubmitStatus('idle')
 
     try {
-      const googleScriptUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxJsh4DhVF9jpMSowvYFqgyny4XrnBjmjY57bJuSeiUNaMgYcUbRLCUkssokdCRxHoI/exec'
+      const googleScriptUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL
+      if (!googleScriptUrl) {
+        throw new Error('NEXT_PUBLIC_GOOGLE_SCRIPT_URL not configured')
+      }
 
       await fetch(googleScriptUrl, {
         method: 'POST',
