@@ -98,6 +98,7 @@ export function BBChat() {
       businessName="Books & Bourbon"
       theme={bbTheme}
       chatApiPath="/api/chat/"
+      chatApiExtraBody={{ locale: 'en' }}
       sessionApiPath="/api/chat/session/"
       summarizeApiPath="/api/chat/summarize/"
       assistantLabel="Books & Bourbon"

@@ -13,7 +13,7 @@ export async function POST(request: Request): Promise<Response> {
   const isAllowed = ALLOWED_ORIGINS.some((o) => origin.includes(o));
 
   const body = await request.json();
-  const { sessionId, message } = body;
+  const { sessionId, message, locale } = body;
 
   if (!sessionId || !message) {
     return Response.json({ error: 'sessionId and message are required' }, { status: 400 });
@@ -29,6 +29,7 @@ export async function POST(request: Request): Promise<Response> {
         tenantId: TENANT_ID,
         channel: 'website',
         contactName: 'Website Visitor',
+        locale,
       }),
     });
 
@@ -46,7 +47,7 @@ export async function POST(request: Request): Promise<Response> {
           controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'suggestions', suggestions })}\n\n`));
         }
 
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'done', detectedLocale: data.detectedLocale })}\n\n`));
         controller.close();
       },
     });
