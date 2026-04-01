@@ -1,0 +1,69 @@
+{
+  "pidgie": {
+    "displayName": "Pidgie",
+    "primaryColor": "#4A9BD9",
+    "secondaryColor": "#7B6B8A",
+    "widgetPrimary": "#7B6B8A",
+    "dashboardTheme": "nest",
+    "dashboardPrimary": "#4A9BD9",
+    "logoUrl": "https://office.runwellsystems.com/brand/pidgie-logo.svg",
+    "avatarUrl": "https://office.runwellsystems.com/brand/pidgie-avatar.png",
+    "footerText": "",
+    "faviconUrl": "/brand/pidgie-favicon.ico",
+    "_designNotes": "Sky (#4A9BD9) is the brand primary (website + dashboard). Iris (#7B6B8A) is the chat widget primary. FAB gradient: Iris to Shimmer (#3DAB8F). Fonts: Plus Jakarta Sans / Figtree / Comfortaa (wordmark)."
+  },
+  "receptia": {
+    "displayName": "Receptia",
+    "primaryColor": "#1B2A4A",
+    "secondaryColor": "#C67D4A",
+    "widgetPrimary": "#1B2A4A",
+    "dashboardTheme": "reception",
+    "dashboardPrimary": "#1B2A4A",
+    "logoUrl": "https://office.runwellsystems.com/brand/receptia-logo.svg",
+    "avatarUrl": "https://office.runwellsystems.com/brand/receptia-avatar.png",
+    "footerText": "",
+    "faviconUrl": "/brand/receptia-favicon.ico",
+    "_designNotes": "Navy (#1B2A4A) is the brand primary (website, widget, dashboard). Copper (#C67D4A) is the accent. Fonts: Urbanist / DM Sans / Playfair Display (wordmark)."
+  },
+  "runwell": {
+    "displayName": "Runwell",
+    "primaryColor": "#e8420e",
+    "secondaryColor": "#FAF8F6",
+    "widgetPrimary": "#e8420e",
+    "dashboardTheme": "office",
+    "dashboardPrimary": "#e8420e",
+    "logoUrl": "https://office.runwellsystems.com/brand/runwell-logo.svg",
+    "avatarUrl": "https://office.runwellsystems.com/brand/runwell-avatar.png",
+    "footerText": "",
+    "faviconUrl": "/brand/runwell-favicon.ico",
+    "_designNotes": "Ember (#e8420e) is the primary across website, widget, and dashboard. Void (#FAF8F6 light / #050505 dark) is the background. Only brand with light/dark mode. Fonts: Futura Condensed / DM Sans / Exo 2."
+  },
+  "shopimate": {
+    "displayName": "Shopimate",
+    "primaryColor": "#B76E79",
+    "secondaryColor": "#121212",
+    "widgetPrimary": "#B76E79",
+    "dashboardTheme": "shopimate",
+    "dashboardPrimary": "#B76E79",
+    "logoUrl": "https://office.runwellsystems.com/brand/shopimate-logo.svg",
+    "avatarUrl": "https://office.runwellsystems.com/brand/shopimate-avatar.png",
+    "footerText": "",
+    "faviconUrl": "/brand/shopimate-favicon.ico",
+    "_designNotes": "Rose Gold (#B76E79) is the primary across website, widget, and dashboard. Noir (#121212) is the background. Fonts: Cabinet Grotesk / Switzer."
+  },
+  "noir-dore": {
+    "_DECOMMISSIONED": true,
+    "_product": "Concierge (decommissioned 2026-03)",
+    "_note": "Former Concierge brand. Do NOT use for new tenants. Do NOT serve assets from production. Kept for historical reference only.",
+    "displayName": "Noir Dore",
+    "primaryColor": "#C9A66B",
+    "secondaryColor": "#0A0908",
+    "widgetPrimary": "#C9A66B",
+    "dashboardTheme": "office",
+    "dashboardPrimary": "#C9A66B",
+    "logoUrl": "",
+    "avatarUrl": "",
+    "footerText": "",
+    "faviconUrl": ""
+  }
+}

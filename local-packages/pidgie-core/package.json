@@ -1,0 +1,168 @@
+{
+  "name": "@runwell/pidgie-core",
+  "version": "1.0.0",
+  "description": "Chatbot domain logic: tools, scraping, detection, suggestions, security, streaming",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./agent": {
+      "types": "./dist/agent.d.ts",
+      "import": "./dist/agent.js"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js"
+    },
+    "./widget": {
+      "types": "./dist/widget/index.d.ts",
+      "import": "./dist/widget/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js"
+    },
+    "./config": {
+      "types": "./dist/config/index.d.ts",
+      "import": "./dist/config/index.js"
+    },
+    "./security": {
+      "types": "./dist/security/index.d.ts",
+      "import": "./dist/security/index.js"
+    },
+    "./session": {
+      "types": "./dist/session/index.d.ts",
+      "import": "./dist/session/index.js"
+    },
+    "./streaming": {
+      "types": "./dist/streaming/index.d.ts",
+      "import": "./dist/streaming/index.js"
+    },
+    "./cache": {
+      "types": "./dist/cache/index.d.ts",
+      "import": "./dist/cache/index.js"
+    },
+    "./datasource": {
+      "types": "./dist/datasource/index.d.ts",
+      "import": "./dist/datasource/index.js"
+    },
+    "./voice": {
+      "types": "./dist/voice/index.d.ts",
+      "import": "./dist/voice/index.js"
+    },
+    "./detection": {
+      "types": "./dist/detection/index.d.ts",
+      "import": "./dist/detection/index.js"
+    },
+    "./scraper": {
+      "types": "./dist/scraper/index.d.ts",
+      "import": "./dist/scraper/index.js"
+    },
+    "./screenshot": {
+      "types": "./dist/screenshot/index.d.ts",
+      "import": "./dist/screenshot/index.js"
+    },
+    "./prompt": {
+      "types": "./dist/prompt/index.d.ts",
+      "import": "./dist/prompt/index.js"
+    },
+    "./voice-prompt": {
+      "types": "./dist/voice-prompt/index.d.ts",
+      "import": "./dist/voice-prompt/index.js"
+    },
+    "./suggestions": {
+      "types": "./dist/suggestions/index.d.ts",
+      "import": "./dist/suggestions/index.js"
+    },
+    "./demo": {
+      "types": "./dist/demo/index.d.ts",
+      "import": "./dist/demo/index.js"
+    },
+    "./demo-stores": {
+      "types": "./dist/demo-stores/index.d.ts",
+      "import": "./dist/demo-stores/index.js"
+    },
+    "./knowledge": {
+      "types": "./dist/knowledge/index.d.ts",
+      "import": "./dist/knowledge/index.js"
+    },
+    "./rag-session": {
+      "types": "./dist/rag-session/index.d.ts",
+      "import": "./dist/rag-session/index.js"
+    },
+    "./scrape-cache": {
+      "types": "./dist/scrape-cache/index.d.ts",
+      "import": "./dist/scrape-cache/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "examples"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src/",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:simulate": "vitest run --config vitest.simulate.config.ts",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@runwell/agent-core": "file:../agent-core",
+    "@runwell/bib-agent": "file:../bib-agent",
+    "@runwell/card-system": "file:../card-system",
+    "@runwell/rag-engine": "file:../rag-engine",
+    "@runwell/scraper": "file:../scraper",
+    "@runwell/shared-tools": "file:../shared-tools",
+    "better-sqlite3": "^12.0.0",
+    "cheerio": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "patchright": "^1.58.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@types/better-sqlite3": "^7.6.0",
+    "@google/generative-ai": "^0.24.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "openai": "^4.0.0",
+    "patchright": "^1.58.0",
+    "@google/generative-ai": ">=0.24.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "openai": {
+      "optional": true
+    },
+    "patchright": {
+      "optional": true
+    },
+    "@google/generative-ai": {
+      "optional": true
+    }
+  }
+}

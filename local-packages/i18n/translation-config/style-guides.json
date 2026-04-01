@@ -1,0 +1,65 @@
+{
+  "ar": {
+    "register": "Modern conversational MSA, natural, not literary",
+    "rules": [
+      "Use active voice, not passive. Say 'نحلل موقعك' (we analyze your site) not 'يتم تحليل الموقع' (the site is being analyzed).",
+      "Use personal pronouns and possessive suffixes: 'جلستك' (your session), 'موقعك' (your site). Never use 'الجلسة الخاصة بك'.",
+      "For ongoing actions, use 'جارٍ + verbal noun' pattern: 'جارٍ التحميل...' (Loading...). Keep it short.",
+      "Avoid formal particles like 'إنّ', 'لقد', 'حيث'. They make UI text feel like a newspaper.",
+      "Keep button labels and short strings punchy: 1-3 words max.",
+      "Numbers stay in Western Arabic numerals (0-9), not Eastern (٠-٩).",
+      "Use masculine default for generic UI text (Arabic convention for addressing unknown users).",
+      "When mixing Arabic and Latin script (brand names, tech terms like URL, Enter), place the Latin word BEFORE the Arabic text so RTL reading flows naturally right-to-left. Example: 'Runwell مدعوم من' not 'مدعوم من Runwell'. The Latin word sits at the visual left (end of RTL line).",
+      "Never use em dashes or en dashes. Rewrite with natural punctuation for the target language."
+    ]
+  },
+  "fr": {
+    "register": "Formal 'vous', professional but approachable tech product",
+    "rules": [
+      "Use 'vous' not 'tu'. Formal register by default.",
+      "ALL French text MUST include proper diacritical marks (accents). NEVER output unaccented French. Required characters: é, è, ê, ë, à, â, ù, û, ô, î, ï, ç. Example: 'opportunité' not 'opportunite', 'stratégique' not 'strategique', 'évalué' not 'evalue'.",
+      "Contractions are OK: 'l'analyse' not 'la analyse'.",
+      "Keep button labels short and direct.",
+      "Use present tense for actions: 'Analyser' not 'Veuillez analyser'.",
+      "Preserve English tech terms where natural: 'chat', 'URL', 'screenshot' if commonly used.",
+      "Never use em dashes or en dashes. Rewrite with natural punctuation for the target language."
+    ]
+  },
+  "de": {
+    "register": "Polite 'Sie', professional but approachable",
+    "rules": [
+      "Use 'Sie' form consistently.",
+      "Compound nouns are fine; don't avoid them artificially.",
+      "Keep button labels concise: prefer infinitive form ('Starten' not 'Klicken Sie hier zum Starten').",
+      "Use accepted anglicisms where natural: 'Website', 'Chat', 'Screenshot'.",
+      "Numbers and punctuation follow German conventions.",
+      "Never use em dashes or en dashes. Rewrite with natural punctuation for the target language."
+    ]
+  },
+  "es": {
+    "register": "Latin American 'tu', neutral vocabulary",
+    "rules": [
+      "Use 'tú' not 'vos' or 'usted'. Neutral Latin American Spanish.",
+      "Avoid Spain-specific vocabulary (e.g., 'ordenador' → use 'computadora' or just 'sitio web').",
+      "Keep button labels direct: imperative form ('Iniciar', 'Enviar').",
+      "Preserve English tech terms where commonly used: 'chat', 'URL'.",
+      "Use inclusive language where possible.",
+      "Never use em dashes or en dashes. Rewrite with natural punctuation for the target language."
+    ]
+  },
+  "tn": {
+    "register": "Tunisian Darija for chat/conversational, MSA for formal UI pages. Warm, local, approachable",
+    "rules": [
+      "Use Tunisian vocabulary where natural: 'مرحبا بيك' (welcome), 'كيفاش' (how), 'وقتاش' (when), 'فين' (where).",
+      "Keep UI labels in simple MSA that Tunisians understand: 'الصفحة الرئيسية' (Home), 'اتصل بنا' (Contact).",
+      "For chat/bot context, use Darija tone: 'أهلا! كيفاش نعاونك؟' not 'مرحباً! كيف يمكنني مساعدتك؟'.",
+      "Numbers stay in Western Arabic numerals (0-9), not Eastern (٠-٩).",
+      "Use masculine default for generic UI text (Arabic convention).",
+      "French loanwords are OK where Tunisians naturally use them: 'réservation', 'menu', 'parking'.",
+      "Keep button labels punchy: 1-3 words max.",
+      "Avoid literary MSA particles ('إنّ', 'لقد', 'حيث'). Tunisians find them distant.",
+      "When mixing Arabic and Latin script (brand names, tech terms like URL, Enter), place the Latin word BEFORE the Arabic text so RTL reading flows naturally right-to-left. Example: 'Runwell يعمل بتقنية' not 'يعمل بتقنية Runwell'. The Latin word sits at the visual left (end of RTL line).",
+      "Never use em dashes or en dashes. Rewrite with natural punctuation for the target language."
+    ]
+  }
+}
