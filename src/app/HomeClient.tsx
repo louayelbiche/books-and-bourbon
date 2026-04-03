@@ -46,6 +46,8 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
   const [videoEvent, setVideoEvent] = useState<CMSEvent | null>(null)
 
   useEffect(() => {
+    document.body.classList.add('js-ready')
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -61,7 +63,10 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
       if (ref) observer.observe(ref)
     })
 
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      document.body.classList.remove('js-ready')
+    }
   }, [])
 
   const addToRefs = (el: HTMLElement | null) => {
@@ -71,11 +76,10 @@ export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBack
   }
 
   function formatDate(dateStr: string) {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })
+    // Use UTC to avoid server/client timezone hydration mismatch
+    const d = new Date(dateStr)
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+    return `${months[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`
   }
 
   return (

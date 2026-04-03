@@ -94,7 +94,7 @@ body {
   }
 }
 
-.reveal {
+.js-ready .reveal {
   opacity: 0;
 }
 

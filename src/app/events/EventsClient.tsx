@@ -152,11 +152,7 @@ export function EventsClient({ events, today, header }: { events: CMSEvent[]; to
                         <div className="flex items-center gap-4 text-brand-tan/70 text-sm mb-3">
                           <span className="flex items-center gap-1">
                             <Icon icon="mdi:calendar" className="w-4 h-4" />
-                            {new Date(event.eventDate).toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                            })}
+                            {(() => { const d = new Date(event.eventDate); const m = ['January','February','March','April','May','June','July','August','September','October','November','December']; return `${m[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`; })()}
                           </span>
                           {event.status === 'recorded' && (
                             <span className="flex items-center gap-1">
