@@ -1,7 +1,6 @@
 // src/prompt/build-prompt.ts
 import { buildSuggestionPromptFragment } from "@runwell/pidgie-core/suggestions";
 function buildPrompt(knowledge, behavior) {
-  var _a;
   const parts = [];
   parts.push(`You are **${knowledge.identity.name}**, ${behavior.role}.`);
   parts.push(`${knowledge.identity.description}`);
@@ -13,7 +12,7 @@ function buildPrompt(knowledge, behavior) {
   parts.push("Never use em dashes or en dashes in any response. Rewrite: period for separate thoughts, semicolon for related clauses, colon for explanations, comma for light pauses.");
   parts.push(behavior.toneInstructions);
   parts.push("");
-  if ((_a = knowledge.contentSections) == null ? void 0 : _a.length) {
+  if (knowledge.contentSections?.length) {
     const sorted = [...knowledge.contentSections].sort(
       (a, b) => (b.priority ?? 0) - (a.priority ?? 0)
     );

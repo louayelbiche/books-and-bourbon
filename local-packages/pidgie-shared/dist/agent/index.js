@@ -232,7 +232,6 @@ This applies to all parts of your response including [SUGGESTIONS:] tags.${derja
    * 4. Final round always yields text
    */
   async *chatStream(userMessage, history, options) {
-    var _a, _b;
     const sanitized = sanitizeInput(userMessage);
     if (sanitized.modified) {
       logger.debug("[security] Input sanitized", { strippedTypes: sanitized.strippedTypes.join(", ") });
@@ -287,8 +286,8 @@ This applies to all parts of your response including [SUGGESTIONS:] tags.${derja
           const toolSuccess = !(toolResult && typeof toolResult === "object" && "error" in toolResult);
           const resultStr = JSON.stringify(toolResult);
           const resultSummary = resultStr.length > 200 ? resultStr.slice(0, 200) : resultStr;
-          (_a = options == null ? void 0 : options.onToolCall) == null ? void 0 : _a.call(options, call.name, toolArgs);
-          (_b = options == null ? void 0 : options.onToolResult) == null ? void 0 : _b.call(options, {
+          options?.onToolCall?.(call.name, toolArgs);
+          options?.onToolResult?.({
             name: call.name,
             args: toolArgs,
             success: toolSuccess,
@@ -320,7 +319,6 @@ This applies to all parts of your response including [SUGGESTIONS:] tags.${derja
    * Injects system prompt into the first user message.
    */
   buildContents(userMessage, history) {
-    var _a;
     const systemPrompt = this.buildSystemPromptWithLocale();
     const contents = [];
     if (history.length === 0) {
@@ -337,7 +335,7 @@ User: ${userMessage}` }]
           {
             text: `${systemPrompt}
 
-User: ${((_a = history[0]) == null ? void 0 : _a.content) || userMessage}`
+User: ${history[0]?.content || userMessage}`
           }
         ]
       });

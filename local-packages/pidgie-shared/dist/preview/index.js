@@ -31,8 +31,8 @@ function usePreview(options) {
   const [tier, setTier] = useState2("loading");
   const [iframeLoaded, setIframeLoaded] = useState2(false);
   const [screenshots, setScreenshots] = useState2({
-    mobile: (initialSession == null ? void 0 : initialSession.screenshotMobile) ?? null,
-    desktop: (initialSession == null ? void 0 : initialSession.screenshotDesktop) ?? null
+    mobile: initialSession?.screenshotMobile ?? null,
+    desktop: initialSession?.screenshotDesktop ?? null
   });
   const iframeVerifiedRef = useRef(false);
   const tierTimeoutRef = useRef(null);
@@ -47,7 +47,7 @@ function usePreview(options) {
     } else {
       startPolling();
     }
-  }, [initialSession == null ? void 0 : initialSession.allowsIframe]);
+  }, [initialSession?.allowsIframe]);
   function startPolling() {
     pollCountRef.current = 0;
     pollIntervalRef.current = setInterval(async () => {

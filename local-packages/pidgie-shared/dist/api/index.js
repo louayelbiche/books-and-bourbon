@@ -2,7 +2,7 @@ import {
   checkIframeAllowed,
   isBlockedUrl,
   sanitizeUrl
-} from "../chunk-EGTKBZT3.js";
+} from "../chunk-QC4G7KUQ.js";
 
 // src/api/url-policy.ts
 function stripUnauthorizedUrls(text, allowedOrigins) {
@@ -171,7 +171,6 @@ function createChatHandler(options) {
       }
       const stream = new ReadableStream({
         async start(controller) {
-          var _a, _b;
           let closed = false;
           const safeEnqueue = (data) => {
             if (closed) return;
@@ -242,8 +241,8 @@ function createChatHandler(options) {
               safeEnqueue(encodeSSE({ type: "text_replace", content: parsed.text }));
             }
             addMsg(sessionStore, sessionId, "assistant", parsed.text, {
-              cards: ((_a = parsed.cards) == null ? void 0 : _a.length) ? parsed.cards : void 0,
-              actions: ((_b = parsed.actions) == null ? void 0 : _b.length) ? parsed.actions : void 0
+              cards: parsed.cards?.length ? parsed.cards : void 0,
+              actions: parsed.actions?.length ? parsed.actions : void 0
             });
             if (memoryStore && convId) {
               try {
@@ -468,7 +467,6 @@ function createSessionHandler(options) {
     return Response.json({ success: true });
   }
   async function HEAD(request) {
-    var _a, _b;
     const adminToken = process.env.ADMIN_TOKEN;
     if (adminToken) {
       const authHeader = request.headers.get("authorization");
@@ -476,12 +474,12 @@ function createSessionHandler(options) {
         return new Response(null, { status: 200 });
       }
     }
-    const stats = ((_a = sessionStore.getStats) == null ? void 0 : _a.call(sessionStore)) ?? { totalSessions: 0, oldestSession: null };
+    const stats = sessionStore.getStats?.() ?? { totalSessions: 0, oldestSession: null };
     return new Response(null, {
       status: 200,
       headers: {
         "X-Total-Sessions": stats.totalSessions.toString(),
-        "X-Oldest-Session": ((_b = stats.oldestSession) == null ? void 0 : _b.toISOString()) || "none"
+        "X-Oldest-Session": stats.oldestSession?.toISOString() || "none"
       }
     });
   }
@@ -696,7 +694,7 @@ function classifyScrapeError(error) {
   }
   const message = error.message || "";
   const cause = error.cause;
-  const causeCode = (cause == null ? void 0 : cause.code) || "";
+  const causeCode = cause?.code || "";
   const statusCode = error.statusCode;
   if (statusCode === 403) {
     return { code: "SITE_PROTECTED", status: 403 };

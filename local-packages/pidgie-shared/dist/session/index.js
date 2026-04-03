@@ -93,7 +93,7 @@ var DemoSessionStore = class {
   }
   getMessages(sessionId) {
     const session = this.sessions.get(sessionId);
-    return (session == null ? void 0 : session.messages) ?? [];
+    return session?.messages ?? [];
   }
   updateScreenshots(sessionId, screenshots) {
     const session = this.sessions.get(sessionId);

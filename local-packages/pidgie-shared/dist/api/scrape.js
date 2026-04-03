@@ -2,7 +2,7 @@ import {
   checkIframeAllowed,
   isBlockedUrl,
   sanitizeUrl
-} from "../chunk-EGTKBZT3.js";
+} from "../chunk-QC4G7KUQ.js";
 
 // src/api/create-scrape-handler.ts
 import { scrapeWebsite, normalizeUrl, resolveCanonicalUrl } from "@runwell/pidgie-core/scraper";
@@ -23,10 +23,9 @@ function createScrapeHandler(options) {
   } = options;
   const rateLimitMap = /* @__PURE__ */ new Map();
   return async function POST(request) {
-    var _a, _b;
     try {
       if (rateLimit > 0) {
-        const clientIp = ((_b = (_a = request.headers.get("x-forwarded-for")) == null ? void 0 : _a.split(",")[0]) == null ? void 0 : _b.trim()) || "unknown";
+        const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
         const now = Date.now();
         const entry = rateLimitMap.get(clientIp);
         if (!entry || now > entry.resetAt) {

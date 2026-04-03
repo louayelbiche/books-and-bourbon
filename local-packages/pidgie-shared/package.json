@@ -1,7 +1,6 @@
 {
   "name": "@runwell/pidgie-shared",
   "version": "1.0.0",
-  "description": "Chatbot core: shared infrastructure for AI chatbot products (agent base, API handlers, chat widget, mobile, env)",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -72,66 +71,7 @@
       "import": "./dist/channel/index.js"
     }
   },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist .turbo",
-    "test": "vitest",
-    "test:run": "vitest run"
-  },
   "dependencies": {
-    "@google/generative-ai": "^0.21.0",
-    "@runwell/pidgie-core": "file:../pidgie-core",
-    "@runwell/card-system": "file:../card-system",
-    "@runwell/error-handling": "file:../error-handling",
-    "@runwell/i18n": "file:../i18n",
-    "@runwell/logger": "file:../logger",
-    "@runwell/shared-tools": "file:../shared-tools"
-  },
-  "devDependencies": {
-    "better-sqlite3": "^12.0.0",
-    "@types/better-sqlite3": "^7.6.0",
-    "@types/node": "^22.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-markdown": "^10.1.0",
-    "lucide-react": "^0.469.0",
-    "tsup": "^8.3.0",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.0"
-  },
-  "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
-    "react-markdown": ">=10.0.0",
-    "lucide-react": ">=0.400.0",
-    "next": ">=15.0.0",
-    "patchright": ">=1.58.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    },
-    "react-dom": {
-      "optional": true
-    },
-    "react-markdown": {
-      "optional": true
-    },
-    "lucide-react": {
-      "optional": true
-    },
-    "next": {
-      "optional": true
-    },
-    "patchright": {
-      "optional": true
-    }
+    "@google/generative-ai": "^0.21.0"
   }
 }

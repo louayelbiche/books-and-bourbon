@@ -4,7 +4,7 @@ import {
 } from "../chunk-HJAFR3AG.js";
 import {
   ChatSessionSync
-} from "../chunk-YAL3J32Q.js";
+} from "../chunk-6EDNNK4I.js";
 
 // src/chat-widget/ChatWidget.tsx
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -50,9 +50,12 @@ function ChatWidget({
   visitorId,
   historyApiPath,
   summarizeApiPath,
+  chatApiExtraBody,
+  chatApiHeaders,
+  voiceLanguageHint,
+  onChatResponse,
   onAnalyticsEvent
 }) {
-  var _a, _b, _c, _d, _e;
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const [widgetState, setWidgetState] = useState("collapsed");
@@ -102,7 +105,7 @@ function ChatWidget({
   const mergedCardConfig = { ...DEFAULT_CARD_CONFIG, ...cardConfigOverride };
   const mergedCardTheme = theme.card ?? DEFAULT_CARD_THEME;
   const handleCardClick = useCallback((card) => {
-    onAnalyticsEvent == null ? void 0 : onAnalyticsEvent({
+    onAnalyticsEvent?.({
       eventType: "interaction.card_clicked",
       entityType: card.type,
       entityId: card.id,
@@ -116,8 +119,7 @@ function ChatWidget({
     }
   }, [onCardClickProp, onAnalyticsEvent]);
   const handleAction = useCallback((action) => {
-    var _a2;
-    onAnalyticsEvent == null ? void 0 : onAnalyticsEvent({
+    onAnalyticsEvent?.({
       eventType: "interaction.action_clicked",
       metadata: { actionType: action.type, label: action.label, payload: action.payload }
     });
@@ -126,7 +128,7 @@ function ChatWidget({
     } else if (action.type === "navigate" && isValidUrl(action.payload)) {
       window.open(action.payload, "_blank", "noopener,noreferrer");
     } else if (action.type === "message") {
-      (_a2 = sendMessageRef.current) == null ? void 0 : _a2.call(sendMessageRef, action.payload);
+      sendMessageRef.current?.(action.payload);
     }
   }, [onActionProp, onAnalyticsEvent]);
   const sendMessageRef = useRef(null);
@@ -139,20 +141,16 @@ function ChatWidget({
     if (!sessionApiPath || !sessionId) return;
     let cancelled = false;
     fetch(`${sessionApiPath}?id=${sessionId}`).then((res) => res.ok ? res.json() : null).then((data) => {
-      var _a2;
       if (cancelled) return;
-      if ((_a2 = data == null ? void 0 : data.messages) == null ? void 0 : _a2.length) {
-        const restored = data.messages.map((m) => {
-          var _a3, _b2;
-          return {
-            role: m.role,
-            content: m.content,
-            ...((_a3 = m.cards) == null ? void 0 : _a3.length) ? { cards: m.cards } : {},
-            ...((_b2 = m.actions) == null ? void 0 : _b2.length) ? { actions: m.actions } : {}
-          };
-        });
+      if (data?.messages?.length) {
+        const restored = data.messages.map((m) => ({
+          role: m.role,
+          content: m.content,
+          ...m.cards?.length ? { cards: m.cards } : {},
+          ...m.actions?.length ? { actions: m.actions } : {}
+        }));
         setMessages(restored);
-        onMessageCount == null ? void 0 : onMessageCount(restored.filter((m) => m.role === "user").length);
+        onMessageCount?.(restored.filter((m) => m.role === "user").length);
       } else {
         setMessages([]);
         setFollowUpSuggestions([]);
@@ -167,7 +165,6 @@ function ChatWidget({
   }, [sessionApiPath, sessionId]);
   const voiceSupported = enableVoice && typeof window !== "undefined" && "MediaRecorder" in window && "mediaDevices" in navigator;
   const releaseMic = useCallback(() => {
-    var _a2, _b2, _c2;
     if (durationIntervalRef.current) {
       clearInterval(durationIntervalRef.current);
       durationIntervalRef.current = null;
@@ -177,12 +174,12 @@ function ChatWidget({
       autoStopRef.current = null;
     }
     cancelAnimationFrame(rafRef.current);
-    if (((_a2 = mediaRecorderRef.current) == null ? void 0 : _a2.state) === "recording") {
+    if (mediaRecorderRef.current?.state === "recording") {
       mediaRecorderRef.current.stop();
     }
-    (_b2 = streamRef.current) == null ? void 0 : _b2.getTracks().forEach((t2) => t2.stop());
+    streamRef.current?.getTracks().forEach((t2) => t2.stop());
     streamRef.current = null;
-    (_c2 = audioCtxRef.current) == null ? void 0 : _c2.close();
+    audioCtxRef.current?.close();
     audioCtxRef.current = null;
   }, []);
   useEffect(() => {
@@ -214,19 +211,15 @@ function ChatWidget({
     return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, [summarizeApiPath]);
   useEffect(() => {
-    var _a2;
-    if (widgetState === "expanded") (_a2 = messagesEndRef.current) == null ? void 0 : _a2.scrollIntoView({ behavior: "smooth" });
+    if (widgetState === "expanded") messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, widgetState, isKeyboardOpen, followUpSuggestions, isLoading]);
   useEffect(() => {
-    if (widgetState === "expanded") setTimeout(() => {
-      var _a2;
-      return (_a2 = inputRef.current) == null ? void 0 : _a2.focus();
-    }, 100);
+    if (widgetState === "expanded") setTimeout(() => inputRef.current?.focus(), 100);
   }, [widgetState]);
   useEffect(() => {
     if (widgetState === "minimized" && messages.length > prevMessageCountRef.current) {
       const lastMessage = messages[messages.length - 1];
-      if ((lastMessage == null ? void 0 : lastMessage.role) === "assistant") {
+      if (lastMessage?.role === "assistant") {
         setHasNewMessage(true);
       }
     }
@@ -245,11 +238,10 @@ function ChatWidget({
         if (e.data.size > 0) chunksRef.current.push(e.data);
       };
       mediaRecorder.onstop = async () => {
-        var _a2;
         stream.getTracks().forEach((t2) => t2.stop());
         streamRef.current = null;
         cancelAnimationFrame(rafRef.current);
-        (_a2 = audioCtxRef.current) == null ? void 0 : _a2.close();
+        audioCtxRef.current?.close();
         audioCtxRef.current = null;
         setAudioLevels([0, 0, 0, 0, 0]);
         if (durationIntervalRef.current) {
@@ -289,8 +281,7 @@ function ChatWidget({
         setRecordingDuration(Math.floor((Date.now() - startTime) / 1e3));
       }, 100);
       autoStopRef.current = setTimeout(() => {
-        var _a2;
-        if (((_a2 = mediaRecorderRef.current) == null ? void 0 : _a2.state) === "recording") mediaRecorderRef.current.stop();
+        if (mediaRecorderRef.current?.state === "recording") mediaRecorderRef.current.stop();
       }, 6e4);
     } catch (error) {
       console.error("Failed to start recording:", error);
@@ -299,23 +290,22 @@ function ChatWidget({
     }
   }, [voiceSupported, sessionId]);
   const stopRecording = useCallback(() => {
-    var _a2;
-    if (((_a2 = mediaRecorderRef.current) == null ? void 0 : _a2.state) === "recording") mediaRecorderRef.current.stop();
+    if (mediaRecorderRef.current?.state === "recording") mediaRecorderRef.current.stop();
   }, []);
   async function transcribeAudio(blob) {
-    var _a2, _b2;
     setIsTranscribing(true);
     try {
       const formData = new FormData();
-      const ext = ((_a2 = blob.type) == null ? void 0 : _a2.includes("mp4")) ? "mp4" : "webm";
+      const ext = blob.type?.includes("mp4") ? "mp4" : "webm";
       formData.append("audio", blob, `recording.${ext}`);
       formData.append("sessionId", sessionId);
+      if (voiceLanguageHint) formData.append("language", voiceLanguageHint);
       const res = await fetch(voiceApiPath, { method: "POST", body: formData });
       if (res.ok) {
         const data = await res.json();
         if (data.text) {
           setInput(data.text);
-          (_b2 = inputRef.current) == null ? void 0 : _b2.focus();
+          inputRef.current?.focus();
         }
       } else {
         let errorDetail = "";
@@ -324,7 +314,7 @@ function ChatWidget({
           errorDetail = errData.error || errData.message || "";
         } catch {
         }
-        const fallback = (labels == null ? void 0 : labels.errorMessage) || "Voice transcription failed. Please try again or type your message.";
+        const fallback = labels?.errorMessage || "Voice transcription failed. Please try again or type your message.";
         console.error("[Voice] API error:", res.status, errorDetail);
         setMessages((prev) => [
           ...prev,
@@ -335,7 +325,7 @@ function ChatWidget({
       console.error("Transcription failed:", error);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: (labels == null ? void 0 : labels.errorMessage) || "Voice transcription failed. Please try again or type your message." }
+        { role: "assistant", content: labels?.errorMessage || "Voice transcription failed. Please try again or type your message." }
       ]);
     } finally {
       setIsTranscribing(false);
@@ -357,7 +347,7 @@ function ChatWidget({
       if (!res.ok) throw new Error("Failed to load history");
       const data = await res.json();
       const container = messagesContainerRef.current;
-      const prevScrollHeight = (container == null ? void 0 : container.scrollHeight) ?? 0;
+      const prevScrollHeight = container?.scrollHeight ?? 0;
       const historyMessages = (data.messages ?? []).map(
         (m) => ({
           role: m.role,
@@ -384,7 +374,6 @@ function ChatWidget({
   }, [visitorId, historyApiPath, historyHasMore, historyLoading, historyOldestTimestamp]);
   const sendMessage = useCallback(
     async (directMessage) => {
-      var _a2;
       const text = (directMessage || input).trim();
       if (!text || isLoading) return;
       setInput("");
@@ -393,7 +382,7 @@ function ChatWidget({
       setFollowUpSuggestions([]);
       setMessages((prev) => {
         const updated = [...prev, { role: "user", content: text }];
-        onMessageCount == null ? void 0 : onMessageCount(updated.filter((m) => m.role === "user").length);
+        onMessageCount?.(updated.filter((m) => m.role === "user").length);
         return updated;
       });
       let addedAssistantMsg = false;
@@ -407,15 +396,15 @@ function ChatWidget({
         resetIdle();
         const res = await fetch(chatApiPath, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ sessionId, message: text }),
+          headers: { "Content-Type": "application/json", ...chatApiHeaders },
+          body: JSON.stringify({ sessionId, message: text, ...chatApiExtraBody }),
           signal: controller.signal
         });
         if (!res.ok) {
           if (idleTimer) clearTimeout(idleTimer);
           throw new Error("Failed to send");
         }
-        const reader = (_a2 = res.body) == null ? void 0 : _a2.getReader();
+        const reader = res.body?.getReader();
         if (!reader) {
           if (idleTimer) clearTimeout(idleTimer);
           throw new Error("No body");
@@ -452,7 +441,7 @@ function ChatWidget({
                 setMessages((prev) => {
                   const u = [...prev];
                   const lastMsg = u[u.length - 1];
-                  if ((lastMsg == null ? void 0 : lastMsg.role) === "assistant") {
+                  if (lastMsg?.role === "assistant") {
                     lastMsg.cards = data.cards;
                   }
                   return [...u];
@@ -461,7 +450,7 @@ function ChatWidget({
                 setMessages((prev) => {
                   const u = [...prev];
                   const lastMsg = u[u.length - 1];
-                  if ((lastMsg == null ? void 0 : lastMsg.role) === "assistant") {
+                  if (lastMsg?.role === "assistant") {
                     lastMsg.actions = data.actions;
                   }
                   return [...u];
@@ -469,11 +458,10 @@ function ChatWidget({
               } else if (data.type === "suggestions" && data.suggestions) {
                 setFollowUpSuggestions(data.suggestions);
               } else if (data.type === "error") {
-                const errorMsg = data.content || (labels == null ? void 0 : labels.errorMessage) || "Sorry, an error occurred. Please try again.";
+                const errorMsg = data.content || labels?.errorMessage || "Sorry, an error occurred. Please try again.";
                 setMessages((prev) => {
-                  var _a3;
                   const u = [...prev];
-                  if (((_a3 = u[u.length - 1]) == null ? void 0 : _a3.role) === "assistant") {
+                  if (u[u.length - 1]?.role === "assistant") {
                     u[u.length - 1] = { role: "assistant", content: errorMsg };
                   } else {
                     u.push({ role: "assistant", content: errorMsg });
@@ -482,6 +470,9 @@ function ChatWidget({
                 });
                 setIsLoading(false);
               } else if (data.type === "done") {
+                if (onChatResponse) {
+                  onChatResponse({ reply: assistantMsg, suggestions: void 0, detectedLocale: data.detectedLocale });
+                }
                 const clean = assistantMsg.replace(/\[CARDS\][\s\S]*?\[\/CARDS\]/gi, "").replace(/\[ACTIONS\][\s\S]*?\[\/ACTIONS\]/gi, "").replace(/\[SUGGESTIONS?:\s*[^\]]+\]\s*$/i, "").replace(/<suggestions?>[\s\S]*?<\/suggestions?>\s*$/i, "").replace(/<suggestions?>[\s\S]*$/i, "").trimEnd();
                 if (clean !== assistantMsg) {
                   setMessages((prev) => {
@@ -497,10 +488,9 @@ function ChatWidget({
         }
         if (idleTimer) clearTimeout(idleTimer);
       } catch {
-        const errorMsg = (labels == null ? void 0 : labels.errorMessage) ?? "Sorry, an error occurred. Please try again.";
+        const errorMsg = labels?.errorMessage ?? "Sorry, an error occurred. Please try again.";
         setMessages((prev) => {
-          var _a3;
-          if (addedAssistantMsg && ((_a3 = prev[prev.length - 1]) == null ? void 0 : _a3.role) === "assistant") {
+          if (addedAssistantMsg && prev[prev.length - 1]?.role === "assistant") {
             const u = [...prev];
             u[u.length - 1] = { role: "assistant", content: errorMsg };
             return u;
@@ -511,17 +501,16 @@ function ChatWidget({
         setIsLoading(false);
         if (syncRef.current) {
           queueMicrotask(() => {
-            var _a3;
             const current = messagesRef.current;
             const lastMsg = current[current.length - 1];
             if (lastMsg) {
-              (_a3 = syncRef.current) == null ? void 0 : _a3.broadcast(lastMsg, current, followUpSuggestions);
+              syncRef.current?.broadcast(lastMsg, current, followUpSuggestions);
             }
           });
         }
       }
     },
-    [input, isLoading, sessionId, chatApiPath, onMessageCount, labels == null ? void 0 : labels.errorMessage, followUpSuggestions]
+    [input, isLoading, sessionId, chatApiPath, onMessageCount, labels?.errorMessage, followUpSuggestions]
   );
   sendMessageRef.current = sendMessage;
   function handleKeyDown(e) {
@@ -571,9 +560,9 @@ function ChatWidget({
     zIndex: WIDGET_Z_INDEX,
     maxWidth: 280,
     padding: "10px 14px",
-    background: ((_a = t.minimizedPreview) == null ? void 0 : _a.bg) ?? t.panel.bg,
-    color: ((_b = t.minimizedPreview) == null ? void 0 : _b.text) ?? t.assistantBubble.text,
-    border: `1px solid ${((_c = t.minimizedPreview) == null ? void 0 : _c.border) ?? t.panel.border}`,
+    background: t.minimizedPreview?.bg ?? t.panel.bg,
+    color: t.minimizedPreview?.text ?? t.assistantBubble.text,
+    border: `1px solid ${t.minimizedPreview?.border ?? t.panel.border}`,
     borderRadius: 12,
     cursor: "pointer",
     boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
@@ -735,7 +724,7 @@ function ChatWidget({
           {
             onClick: handleToggle,
             style: fabStyle,
-            "aria-label": (labels == null ? void 0 : labels.openChat) ?? "Open chat",
+            "aria-label": labels?.openChat ?? "Open chat",
             children: [
               fabIconEl,
               hasNewMessage && /* @__PURE__ */ jsx("span", { style: {
@@ -794,7 +783,7 @@ function ChatWidget({
             {
               onClick: handleMinimize,
               style: headerBtnStyle,
-              "aria-label": (labels == null ? void 0 : labels.minimize) ?? "Minimize",
+              "aria-label": labels?.minimize ?? "Minimize",
               children: /* @__PURE__ */ jsx(Minus, { style: { width: 18, height: 18 } })
             }
           ),
@@ -803,7 +792,7 @@ function ChatWidget({
             {
               onClick: handleToggle,
               style: headerBtnStyle,
-              "aria-label": (labels == null ? void 0 : labels.closeChat) ?? "Close",
+              "aria-label": labels?.closeChat ?? "Close",
               children: /* @__PURE__ */ jsx(X, { style: { width: 18, height: 18 } })
             }
           )
@@ -840,7 +829,7 @@ function ChatWidget({
                   opacity: historyLoading ? 0.6 : 1,
                   marginBottom: 4
                 },
-                children: historyLoading ? (labels == null ? void 0 : labels.loadingHistory) ?? "Loading..." : (labels == null ? void 0 : labels.loadEarlier) ?? "Load earlier messages"
+                children: historyLoading ? labels?.loadingHistory ?? "Loading..." : labels?.loadEarlier ?? "Load earlier messages"
               }
             ),
             messages.length === 0 ? /* @__PURE__ */ jsxs("div", { style: { textAlign: "center", padding: "24px 16px" }, children: [
@@ -918,7 +907,7 @@ function ChatWidget({
                                 target: "_blank",
                                 rel: "noopener noreferrer",
                                 onClick: () => {
-                                  onAnalyticsEvent == null ? void 0 : onAnalyticsEvent({
+                                  onAnalyticsEvent?.({
                                     eventType: "interaction.link_clicked",
                                     metadata: { url: href, linkText: typeof children === "string" ? children : void 0 }
                                   });
@@ -938,7 +927,7 @@ function ChatWidget({
                         theme: mergedCardTheme,
                         config: mergedCardConfig,
                         onCardClick: handleCardClick,
-                        imageErrorLabel: labels == null ? void 0 : labels.imageUnavailable,
+                        imageErrorLabel: labels?.imageUnavailable,
                         onCardVisible: onAnalyticsEvent ? (card) => onAnalyticsEvent({
                           eventType: "entity.card_visible",
                           entityType: card.type,
@@ -984,7 +973,7 @@ function ChatWidget({
               },
               i
             )),
-            isLoading && ((_d = messages[messages.length - 1]) == null ? void 0 : _d.role) === "user" && /* @__PURE__ */ jsxs("div", { style: { display: "flex", gap: 8, justifyContent: "flex-start" }, children: [
+            isLoading && messages[messages.length - 1]?.role === "user" && /* @__PURE__ */ jsxs("div", { style: { display: "flex", gap: 8, justifyContent: "flex-start" }, children: [
               /* @__PURE__ */ jsx(
                 "div",
                 {
@@ -1017,7 +1006,7 @@ function ChatWidget({
               )) }) })
             ] }),
             followUpSuggestions.length > 0 && !isLoading && messages.length > 0 && /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8, marginTop: 8 }, children: followUpSuggestions.map((s, idx) => /* @__PURE__ */ jsx("button", { style: suggestionStyle, onClick: () => {
-              onAnalyticsEvent == null ? void 0 : onAnalyticsEvent({
+              onAnalyticsEvent?.({
                 eventType: "interaction.suggestion_clicked",
                 metadata: { suggestionText: s, suggestionIndex: idx }
               });
@@ -1058,7 +1047,7 @@ function ChatWidget({
                   transition: "background 0.2s",
                   opacity: isLoading || isTranscribing ? 0.4 : 1
                 },
-                "aria-label": isRecording ? (labels == null ? void 0 : labels.stopRecording) ?? "Stop listening" : (labels == null ? void 0 : labels.voiceInput) ?? "Voice input",
+                "aria-label": isRecording ? labels?.stopRecording ?? "Stop listening" : labels?.voiceInput ?? "Voice input",
                 children: isTranscribing ? /* @__PURE__ */ jsx(Loader2, { style: { width: 18, height: 18, animation: "chat-spin 1s linear infinite" } }) : isRecording ? /* @__PURE__ */ jsx(Square, { style: { width: 14, height: 14 } }) : /* @__PURE__ */ jsx(Mic, { style: { width: 18, height: 18 } })
               }
             ),
@@ -1076,7 +1065,7 @@ function ChatWidget({
                 },
                 i
               )) }),
-              /* @__PURE__ */ jsx("span", { style: { fontSize: 14, color: t.input.placeholder }, children: ((_e = labels == null ? void 0 : labels.recordingPlaceholder) == null ? void 0 : _e.replace("${seconds}", String(recordingDuration))) ?? `Listening... ${recordingDuration}s` })
+              /* @__PURE__ */ jsx("span", { style: { fontSize: 14, color: t.input.placeholder }, children: labels?.recordingPlaceholder?.replace("${seconds}", String(recordingDuration)) ?? `Listening... ${recordingDuration}s` })
             ] }) : isTranscribing ? /* @__PURE__ */ jsxs("div", { style: { ...inputStyle, display: "flex", alignItems: "center", gap: 10, overflow: "hidden", position: "relative" }, children: [
               /* @__PURE__ */ jsx("div", { style: {
                 position: "absolute",
@@ -1085,7 +1074,7 @@ function ChatWidget({
                 animation: "chat-shimmer-slide 1.5s ease-in-out infinite"
               } }),
               /* @__PURE__ */ jsx(Loader2, { style: { width: 16, height: 16, animation: "chat-spin 1s linear infinite", color: t.sendButton.bg, flexShrink: 0 } }),
-              /* @__PURE__ */ jsx("span", { style: { fontSize: 14, color: t.input.placeholder }, children: (labels == null ? void 0 : labels.transcribing) ?? "Transcribing..." })
+              /* @__PURE__ */ jsx("span", { style: { fontSize: 14, color: t.input.placeholder }, children: labels?.transcribing ?? "Transcribing..." })
             ] }) : /* @__PURE__ */ jsx(
               "textarea",
               {
@@ -1099,7 +1088,7 @@ function ChatWidget({
                   el.style.height = Math.min(el.scrollHeight, maxH) + "px";
                 },
                 onKeyDown: handleKeyDown,
-                placeholder: (labels == null ? void 0 : labels.typePlaceholder) ?? "Type a message...",
+                placeholder: labels?.typePlaceholder ?? "Type a message...",
                 disabled: isLoading,
                 rows: 1,
                 style: inputStyle
@@ -1116,7 +1105,7 @@ function ChatWidget({
                   color: input.trim() && !isLoading && !isRecording ? t.sendButton.text : t.sendButton.disabledText,
                   cursor: input.trim() && !isLoading && !isRecording ? "pointer" : "not-allowed"
                 },
-                "aria-label": (labels == null ? void 0 : labels.sendMessage) ?? "Send message",
+                "aria-label": labels?.sendMessage ?? "Send message",
                 children: isLoading ? /* @__PURE__ */ jsx(Loader2, { style: { width: 18, height: 18, animation: "chat-spin 1s linear infinite" } }) : /* @__PURE__ */ jsx(Send, { style: { width: 18, height: 18 } })
               }
             )

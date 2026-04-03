@@ -30,7 +30,6 @@ var ChatSessionSync = class {
    * Broadcast a new message to other tabs and persist state
    */
   broadcast(message, allMessages, suggestions) {
-    var _a;
     this.sequence++;
     const state = {
       messages: allMessages,
@@ -38,7 +37,7 @@ var ChatSessionSync = class {
       sequence: this.sequence
     };
     this.persistState(state);
-    (_a = this.channel) == null ? void 0 : _a.postMessage({
+    this.channel?.postMessage({
       type: "new_message",
       sessionId: this.sessionId,
       sequence: this.sequence,
@@ -50,7 +49,6 @@ var ChatSessionSync = class {
    * Broadcast full state to other tabs (for bulk updates like session restore)
    */
   broadcastFullState(messages, suggestions) {
-    var _a;
     this.sequence++;
     const state = {
       messages,
@@ -58,7 +56,7 @@ var ChatSessionSync = class {
       sequence: this.sequence
     };
     this.persistState(state);
-    (_a = this.channel) == null ? void 0 : _a.postMessage({
+    this.channel?.postMessage({
       type: "state_update",
       sessionId: this.sessionId,
       sequence: this.sequence,
@@ -70,8 +68,7 @@ var ChatSessionSync = class {
    * Clean up resources
    */
   destroy() {
-    var _a;
-    (_a = this.channel) == null ? void 0 : _a.close();
+    this.channel?.close();
     this.channel = null;
     if (this.visibilityHandler) {
       document.removeEventListener("visibilitychange", this.visibilityHandler);
@@ -79,27 +76,25 @@ var ChatSessionSync = class {
     }
   }
   handleMessage(data) {
-    var _a, _b;
     if (data.sessionId !== this.sessionId) return;
     if (data.sequence <= this.sequence) return;
     if (data.type === "state_update") {
       this.sequence = data.sequence;
       const state = data.payload;
-      (_a = this.onStateUpdate) == null ? void 0 : _a.call(this, state);
+      this.onStateUpdate?.(state);
     } else if (data.type === "new_message") {
       const stored = this.loadState();
       if (stored) {
         this.sequence = stored.sequence;
-        (_b = this.onStateUpdate) == null ? void 0 : _b.call(this, stored);
+        this.onStateUpdate?.(stored);
       }
     }
   }
   reconcile() {
-    var _a;
     const stored = this.loadState();
     if (stored && stored.sequence > this.sequence) {
       this.sequence = stored.sequence;
-      (_a = this.onStateUpdate) == null ? void 0 : _a.call(this, stored);
+      this.onStateUpdate?.(stored);
     }
   }
   persistState(state) {
@@ -130,4 +125,4 @@ var ChatSessionSync = class {
 export {
   ChatSessionSync
 };
-//# sourceMappingURL=chunk-YAL3J32Q.js.map
+//# sourceMappingURL=chunk-6EDNNK4I.js.map

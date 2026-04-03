@@ -2,7 +2,7 @@ import {
   checkIframeAllowed,
   isBlockedUrl,
   sanitizeUrl
-} from "../chunk-EGTKBZT3.js";
+} from "../chunk-QC4G7KUQ.js";
 export {
   checkIframeAllowed,
   isBlockedUrl,

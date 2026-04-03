@@ -55,7 +55,6 @@ function sanitizeUrl(urlString) {
   }
 }
 async function checkIframeAllowed(url) {
-  var _a, _b;
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5e3);
@@ -65,11 +64,11 @@ async function checkIframeAllowed(url) {
       redirect: "follow"
     });
     clearTimeout(timeout);
-    const xfo = (_a = res.headers.get("x-frame-options")) == null ? void 0 : _a.toLowerCase();
+    const xfo = res.headers.get("x-frame-options")?.toLowerCase();
     if (xfo === "deny" || xfo === "sameorigin") {
       return false;
     }
-    const csp = ((_b = res.headers.get("content-security-policy")) == null ? void 0 : _b.toLowerCase()) || "";
+    const csp = res.headers.get("content-security-policy")?.toLowerCase() || "";
     if (csp.includes("frame-ancestors")) {
       const match = csp.match(/frame-ancestors\s+([^;]+)/);
       if (match) {
@@ -90,4 +89,4 @@ export {
   sanitizeUrl,
   checkIframeAllowed
 };
-//# sourceMappingURL=chunk-EGTKBZT3.js.map
+//# sourceMappingURL=chunk-QC4G7KUQ.js.map
