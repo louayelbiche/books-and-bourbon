@@ -24,13 +24,19 @@ function loadSnapshot(key) {
     return null;
   }
 }
+var _revalidateTimers = {};
+var REVALIDATE_INTERVAL = 5 * 60 * 1000; // 5 minutes between background fetches
 async function snapshotFirst(key, fetcher) {
   const snapshot = loadSnapshot(key);
   if (snapshot) {
-    void fetcher().then((result2) => {
-      if (result2 !== null) saveSnapshot(key, result2);
-    }).catch(() => {
-    });
+    var now = Date.now();
+    if (!_revalidateTimers[key] || now - _revalidateTimers[key] > REVALIDATE_INTERVAL) {
+      _revalidateTimers[key] = now;
+      void fetcher().then((result2) => {
+        if (result2 !== null) saveSnapshot(key, result2);
+      }).catch(() => {
+      });
+    }
     return snapshot;
   }
   const result = await fetcher();
