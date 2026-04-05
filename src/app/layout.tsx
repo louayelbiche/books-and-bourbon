@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
-import { BBChat } from '@/components/chat/BBChat'
 import { fetchSiteImages } from '@/lib/cms'
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://books.runwellsystems.com'
@@ -74,7 +74,11 @@ export default function RootLayout({
         />
         <Navigation />
         <main>{children}</main>
-        <BBChat />
+        <Script
+          src="https://office.runwellsystems.com/cdn/widget/v2/chatbot.js"
+          data-tenant="capitalv"
+          strategy="lazyOnload"
+        />
         <Footer />
       </body>
     </html>
