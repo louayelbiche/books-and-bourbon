@@ -28,7 +28,7 @@ interface HomeClientProps {
   homeContent?: HomeContent
 }
 
-export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBackground = '/images/hero-bg.png', homeContent }: HomeClientProps) {
+export function HomeClient({ featuredEvent, upcomingEvents, pastEvents, heroBackground = '/images/hero-bg.jpg', homeContent }: HomeClientProps) {
   const hero = homeContent?.hero || {
     eyebrow: 'Literary Conversations',
     title: 'Books and Bourbon',

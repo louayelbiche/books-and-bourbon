@@ -104,7 +104,7 @@ export default async function HomePage() {
     .filter((e) => e.id !== featuredEvent.id)
     .slice(0, 3)
 
-  const heroBackground = siteImages.heroBackground || '/images/hero-bg.png'
+  const heroBackground = siteImages.heroBackground || '/images/hero-bg.jpg'
 
   return <HomeClient featuredEvent={featuredEvent} upcomingEvents={upcomingEvents} pastEvents={pastEvents} heroBackground={heroBackground} homeContent={pageContent.home} />
 }
