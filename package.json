@@ -9,25 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.21.0",
+    "@google/generative-ai": "^0.24.0",
     "@iconify/react": "^5.0.1",
-    "@runwell/agent-core": "file:./local-packages/agent-core",
-    "@runwell/bot-memory": "file:./local-packages/bot-memory",
+    "@runwell/agent-core": "^1.0.0",
+    "@runwell/bot-memory": "^1.0.0",
     "@runwell/capitalv-brand-kit": "file:../capitalv-brand-kit",
-    "@runwell/card-system": "file:./local-packages/card-system",
-    "@runwell/cms-snapshot": "file:./local-packages/cms-snapshot",
-    "@runwell/error-handling": "file:./local-packages/error-handling",
-    "@runwell/health": "file:./local-packages/health",
-    "@runwell/i18n": "file:./local-packages/i18n",
-    "@runwell/logger": "file:./local-packages/logger",
-    "@runwell/pidgie-core": "file:./local-packages/pidgie-core",
-    "@runwell/pidgie-shared": "file:./local-packages/pidgie-shared",
+    "@runwell/card-system": "^1.0.0",
+    "@runwell/cms-snapshot": "^1.0.0",
+    "@runwell/error-handling": "^1.0.0",
+    "@runwell/health": "^1.0.0",
+    "@runwell/i18n": "^1.0.0",
+    "@runwell/logger": "^1.0.0",
+    "@runwell/pidgie-core": "^1.0.0",
+    "@runwell/pidgie-shared": "^1.0.0",
     "lucide-react": "^0.469.0",
     "next": "^15.5.14",
     "pg": "^8.13.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-markdown": "^9.0.0"
+    "react-markdown": "^10.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
@@ -38,20 +38,5 @@
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
-  },
-  "overrides": {
-    "@runwell/agent-core": "file:./local-packages/agent-core",
-    "@runwell/bot-memory": "file:./local-packages/bot-memory",
-    "@runwell/pidgie-core": "file:./local-packages/pidgie-core",
-    "@runwell/pidgie-shared": "file:./local-packages/pidgie-shared",
-    "@runwell/card-system": "file:./local-packages/card-system",
-    "@runwell/error-handling": "file:./local-packages/error-handling",
-    "@runwell/health": "file:./local-packages/health",
-    "@runwell/logger": "file:./local-packages/logger",
-    "@runwell/i18n": "file:./local-packages/i18n",
-    "@runwell/shared-tools": "file:./local-packages/shared-tools",
-    "@runwell/bib-agent": "file:./local-packages/bib-agent",
-    "@runwell/rag-engine": "file:./local-packages/rag-engine",
-    "@runwell/scraper": "file:./local-packages/scraper"
   }
 }

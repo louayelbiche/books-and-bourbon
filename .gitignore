@@ -37,3 +37,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .vendor/*/node_modules
+.npmrc
+/local-packages
