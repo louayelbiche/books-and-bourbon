@@ -192,7 +192,7 @@ When transferring B&B to a customer domain (e.g. `booksandbourbon.com`):
 
 ### CMS Connection
 - [ ] Update `CMS_API_URL` in `.env.local` to BIB dashboard public URL (not localhost)
-- [ ] e.g. `CMS_API_URL=https://dashboard.runwellsystems.com`
+- [ ] e.g. `CMS_API_URL=https://office.runwellsystems.com`
 - [ ] Verify API key works from customer domain
 
 ### CORS
