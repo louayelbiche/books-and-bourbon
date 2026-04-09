@@ -76,7 +76,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Script
           src="https://office.runwellsystems.com/cdn/widget/v2/chatbot.js"
-          data-tenant="capitalv"
+          data-tenant="books-and-bourbon"
           strategy="lazyOnload"
         />
         <Footer />
