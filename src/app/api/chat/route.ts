@@ -10,7 +10,13 @@ const ALLOWED_ORIGINS = ['books.runwellsystems.com', 'books-staging.runwellsyste
 
 export async function POST(request: Request): Promise<Response> {
   const origin = request.headers.get('origin') || '';
-  const isAllowed = ALLOWED_ORIGINS.some((o) => origin.includes(o));
+  const allowedExact = [
+    'https://books.runwellsystems.com',
+    'https://books-staging.runwellsystems.com',
+    'http://localhost:3000',
+    'http://localhost:3001',
+  ];
+  const isAllowed = allowedExact.includes(origin);
 
   const body = await request.json();
   const { sessionId, message, locale } = body;
